@@ -1,5 +1,5 @@
 
-class Program #< BinData::Record
+class Microkorg::Program #< BinData::Record
   def init
   end
 
