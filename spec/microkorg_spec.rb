@@ -8,6 +8,6 @@ RSpec.describe Microkorg do
   it "instantiales a Program class" do
     p = Microkorg::Program.new
 
-    expect(p).to not_eq(nil)
+    expect(p).to be_a(Microkorg::Program)
   end
 end
