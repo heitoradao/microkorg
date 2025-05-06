@@ -2,7 +2,6 @@
 
 require "microkorg"
 
-puts 'inside exe/microkorg'
 
 raw = File.binread('data/U_A1_Init_Program.mk2prog')
 
