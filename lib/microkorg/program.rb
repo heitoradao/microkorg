@@ -1,49 +1,19 @@
+require 'bindata'
 
-class Microkorg::Program #< BinData::Record
-  attr_accessor :filename
+class Microkorg::Program < BinData::Record
+  endian :big
+
+  string :header, length: 8
+  uint16 :patch_id
+  uint16 :category
+  uint8  :unknown1
+  uint8  :unknown2
+  string :name, length: 16
+  array  :reserved, type: :uint8, initial_length: 12
+  array  :parameters, type: :uint8, initial_length: 128
   
-
-  def initialize(*args)
-    if (args.size == 1)
-      @filename = args.shift
-    end
-    @valid = true
-  end
-
-  def raw_content
-    @raw ||= File.read(filename)
-  end
-
-  def name
-    'Init Program'
-  end
-
-  def mixer
-    [127, 0, 0]
-  end
-
-  def osc1
-    [1, 2, 3, 4, 5]
-  end
-
-  def osc2
-    osc1
-  end
-
-  def noise
-    [1, 2, 3]
-  end
-
-  def awp_eg
-    [1, 2, 3, 4]
-  end
-
-  def filter_ef
-    [1, 2, 3, 4]
-  end
-
-  def valid?
-    @valid
+  def to_s
+    "MicroKorg2 Patch - Nome: #{name.strip}, ID: #{patch_id}, Categoria: #{category}"
   end
 end
 
