@@ -11,5 +11,17 @@ require "microkorg"
 # require "pry"
 # Pry.start
 
+
+files = Dir['data/*.mk2prog']
+puts files, "\n"
+print "Digite o nome do arquivo: "
+filename = gets.chomp
+
+p = Microkorg::Program.read File.open filename
+puts p
+
+
 require "irb"
 IRB.start(__FILE__)
+
+
