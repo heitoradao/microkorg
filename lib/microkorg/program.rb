@@ -28,25 +28,29 @@ class Microkorg::Program < BinData::Record
   string :offset_70, length: 16
   string :offset_80, length: 16
   string :offset_90, length: 16
-  
+
   # Offset a0
   uint8 :osc1_type
   # 0 = saw
   # 1 = square
 
-  string :filler_a0, length: 15
+  uint8 :unknow_a0_1
+  uint8 :osc1_shape
+  string :filler_a0_1, length: 5
+  uint8 :osc1_level
+  string :filler_a0_2, length: 7
 
   string :offset_b0, length: 16
   string :offset_c0, length: 16
   string :offset_d0, length: 16
   string :offset_e0, length: 16
-  
+
   string :offset_f0, length: 12
   uint8 :resonance
   string :filler_f0, length: 3
 
   string :offset_100, length: 16
-  
+
   # string :offset_110, length: 16
   string :offset_110, length: 8
   uint8 :aeg_attk
@@ -89,7 +93,7 @@ class Microkorg::Program < BinData::Record
   string :offset_300, length: 16
   string :offset_310, length: 16
   string :offset_320, length: 16
-  
+
   string :offset_330, length: 8
   uint8 :tempo
   string :filler_330_1, length: 7
@@ -174,6 +178,8 @@ class Microkorg::Program < BinData::Record
   def to_s
     <<~INFO
       MicroKorg2 Patch - Nome: #{name.strip}
+      tempo: #{tempo}
+      OSC1 lever: #{osc1_level}
     INFO
 =begin
     ID: #{patch_id}, Categoria: #{category}
