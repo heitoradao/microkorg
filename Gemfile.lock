@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     microkorg (0.1.0)
+      bindata
 
 GEM
   remote: https://rubygems.org/
