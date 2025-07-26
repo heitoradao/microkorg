@@ -12,12 +12,14 @@ class Microkorg::Program < BinData::Record
   string :filler_10_1, length: 4
   string :name, length: 20
   uint8 :timbre_mode_a
-  string :filler1, length: 3
+  string :filler0, length: 1
+  int16 :octave_shift
+  #string :filler1, length: 2
   string :filler2, length: 4
 
   # Offset 30
   string :filler_30_1, length: 4
-  uint8 :bank
+  uint8 :genre
   string :filler_30_2, length: 5
   uint8 :unknow_30_1
   string :filler_30_3, length: 5
@@ -30,8 +32,17 @@ class Microkorg::Program < BinData::Record
   # Offset 80
   uint8 :poly_mono
   string :filler_80_1, length: 3
+
   uint8 :unison
-  string :filler_80_2, length: 11
+  string :filler_80_2, length: 1
+  uint8 :unison_detune
+
+  string :filler_80_3, length: 1
+
+  uint8 :unison_spread
+  string :filler_80_4, length: 3
+
+  string :filler_80_5, length: 4
 
   string :offset_90, length: 16
 
