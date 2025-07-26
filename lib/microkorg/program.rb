@@ -26,8 +26,13 @@ class Microkorg::Program < BinData::Record
   string :offset_50, length: 16
   string :offset_60, length: 16
   string :offset_70, length: 16
-  string :offset_80, length: 16
+
+  # Offset 80
+  uint8 :poly_mono
+  string :filler_80, length: 15
+
   string :offset_90, length: 16
+
 
   # Offset a0
   uint8 :osc1_type
@@ -38,20 +43,25 @@ class Microkorg::Program < BinData::Record
   uint8 :osc1_shape
   string :filler_a0_1, length: 5
   uint8 :osc1_level
-  string :filler_a0_2, length: 7
+  string :filler_a0_2, length: 3
+  uint8 :osc1_semitones
+  string :filler_a0_3, length: 3
 
   string :offset_b0, length: 16
   string :offset_c0, length: 16
   string :offset_d0, length: 16
   string :offset_e0, length: 16
 
+  # ----------
   string :offset_f0, length: 12
   uint8 :resonance
   string :filler_f0, length: 3
+  # ---------
+
 
   string :offset_100, length: 16
 
-  # string :offset_110, length: 16
+
   string :offset_110, length: 8
   uint8 :aeg_attk
   string :filler_110_1, length: 5
@@ -131,7 +141,7 @@ class Microkorg::Program < BinData::Record
   string :offset_500, length: 16
   string :offset_510, length: 16
   string :offset_520, length: 16
-  #string :offset_530, length: 16
+  string :offset_530, length: 16
 
 
 
