@@ -33,9 +33,10 @@ class Microkorg::Program < BinData::Record
 
   string :offset_90, length: 16
 
-
+  # ----------------------------------
+  # Start OSC 1
   # Offset a0
-  uint8 :osc1_type
+  uint8 :osc1_wave
   # 0 = saw
   # 1 = square
 
@@ -47,10 +48,37 @@ class Microkorg::Program < BinData::Record
   uint8 :osc1_semitones
   string :filler_a0_3, length: 3
 
-  string :offset_b0, length: 16
-  string :offset_c0, length: 16
-  string :offset_d0, length: 16
-  string :offset_e0, length: 16
+  # ---------------------------------------
+  string :offset_b0, length: 8
+  # -------------------------------
+  # Start OSC 2
+  uint8 :osc2_wave
+  uint8 :osc2_unknow_1
+  # -----------------------------------
+  # OSC 2
+  uint8 :osc2_shape
+  string :offset_b0_2, length: 5
+  uint8 :osc2_level
+  string :filler_c0, length: 3
+  uint8 :osc2_semitones
+  string :offset_c0, length: 11
+
+  # ------------------------------------
+  # Start OSC 3
+  uint8 :osc3_wave
+  uint8 :osc3_unknow
+  uint8 :osc3_shape
+  string :offset_d0, length: 5
+  uint8 :osc3_level
+  string :filler_d0, length: 3
+  uint8 :osc3_semitones
+  string :filler, length: 3
+
+
+
+  string :offset_e0, length: 12
+  uint8 :noise_level
+  string :filler_e0, length: 3
 
   # ----------
   string :offset_f0, length: 12
@@ -189,7 +217,24 @@ class Microkorg::Program < BinData::Record
     <<~INFO
       MicroKorg2 Patch - Nome: #{name.strip}
       tempo: #{tempo}
-      OSC1 lever: #{osc1_level}
+      OSC1:
+         level: #{osc1_level}
+         shape: #{osc1_shape}
+         semitones: #{osc1_semitones}
+      OSC2:
+         level: #{osc2_level}
+         shape: #{osc2_shape}
+         semitones: #{osc2_semitones}
+      OSC3:
+         level: #{osc3_level}
+         shape: #{osc3_shape}
+         semitones: #{osc3_semitones}
+      Noise:
+        level: #{noise_level}
+      Amp EG:
+         Attk: #{aeg_attk}
+         Dec: \#{aeg_dec}
+         Rel: #{aeg_rel}
     INFO
 =begin
     ID: #{patch_id}, Categoria: #{category}
