@@ -11,18 +11,17 @@ class Microkorg::Program < BinData::Record
   # Offset 10
   string :filler_10_1, length: 4
   string :name, length: 20
-  uint8 :timbre_mode_a
-  string :filler0, length: 1
+  int16 :timbre_mode_a
   int16 :octave_shift
   #string :filler1, length: 2
   string :filler2, length: 4
 
   # Offset 30
   string :filler_30_1, length: 4
-  uint8 :genre
-  string :filler_30_2, length: 5
-  uint8 :unknow_30_1
-  string :filler_30_3, length: 5
+  int16 :genre
+  string :filler_30_2, length: 4
+  int16 :unknow_30_1
+  string :filler_30_3, length: 4
 
   string :offset_40, length: 16
   string :offset_50, length: 16
@@ -32,14 +31,13 @@ class Microkorg::Program < BinData::Record
   # -------------------
   # Unison
   # Offset 80
-  uint8 :poly_mono
-  string :filler_80_1, length: 3
+  int16 :poly_mono
+  string :filler_80_1, length: 2
 
   int16 :unison
   int16 :unison_detune
   int16 :unison_spread
-
-  string :filler_80_5, length: 2
+  int16 :unison_x
   string :filler_80_6, length: 4
 
 
@@ -51,18 +49,18 @@ class Microkorg::Program < BinData::Record
   int16 :osc1_wave
   # 0 = saw
   # 1 = square
-
+  # 2 = triangle
+  # 3 = sine
+  # 4
+  # 5
   int16 :osc1_shape
   string :filler_a0_1, length: 4
   int16 :osc1_level
   string :filler_a0_2, length: 2
-
-  # Semitones can be negative too
   int16 :osc1_semitones
 
   string :filler_a0_4, length: 2
 
-  # ---------------------------------------
   string :offset_b0, length: 8
   # -------------------------------
   # Start OSC 2
@@ -87,26 +85,22 @@ class Microkorg::Program < BinData::Record
   string :offset_e0_1, length: 10
 
   string :offset_e0_2, length: 2 # probably the noise type
-  uint8 :noise_level
-  string :filler_e0, length: 3
+  int16 :noise_level
+  string :filler_e0, length: 2
 
   # ----------
   string :offset_f0, length: 12
-  uint8 :resonance
-  string :filler_f0, length: 3
+  int16 :resonance
+  string :filler_f0, length: 2
   # ---------
 
   string :offset_100, length: 16
 
   string :offset_110, length: 8
-  uint8 :aeg_attk
-  string :filler_110_1, length: 1
-  uint8 :aeg_decay
-  string :filler_110_1b, length: 1
-  uint8 :aeg_sustain
-  string :filler_110_2, length: 1
-  uint8 :aeg_rel
-  string :filler_110_3, length: 1
+  int16 :aeg_attk
+  int16 :aeg_decay
+  int16 :aeg_sustain
+  int16 :aeg_rel
 
   string :offset_120, length: 16
   string :offset_130, length: 16
@@ -181,7 +175,8 @@ class Microkorg::Program < BinData::Record
   string :offset_500, length: 16
   string :offset_510, length: 16
   string :offset_520, length: 16
-  string :offset_530, length: 16
+  string :offset_530, length: 12
+  string :checksum, length: 4
 
 
 
