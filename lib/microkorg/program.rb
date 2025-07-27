@@ -29,20 +29,31 @@ class Microkorg::Program < BinData::Record
   string :offset_60, length: 16
   string :offset_70, length: 16
 
+  # -------------------
+  # Unison
   # Offset 80
   uint8 :poly_mono
   string :filler_80_1, length: 3
 
   uint8 :unison
   string :filler_80_2, length: 1
-  uint8 :unison_detune
+  # This works. Let's try to change uint8 for uint16 or int16
+  # uint8 :unison
+  # string :filler_80_2, length: 1
 
+  uint8 :unison_detune
   string :filler_80_3, length: 1
 
   uint8 :unison_spread
-  string :filler_80_4, length: 3
+  string :filler_80_4, length: 1
 
-  string :filler_80_5, length: 4
+  string :filler_80_5, length: 2
+
+  string :filler_80_6, length: 4
+
+
+
+
 
   string :offset_90, length: 16
 
@@ -58,8 +69,11 @@ class Microkorg::Program < BinData::Record
   string :filler_a0_1, length: 5
   uint8 :osc1_level
   string :filler_a0_2, length: 3
-  uint8 :osc1_semitones
-  string :filler_a0_3, length: 3
+
+  # Semitones can be negative too
+  int16 :osc1_semitones
+
+  string :filler_a0_4, length: 2
 
   # ---------------------------------------
   string :offset_b0, length: 8
@@ -67,8 +81,7 @@ class Microkorg::Program < BinData::Record
   # Start OSC 2
   uint8 :osc2_wave
   uint8 :osc2_unknow_1
-  # -----------------------------------
-  # OSC 2
+
   uint8 :osc2_shape
   string :offset_b0_2, length: 5
   uint8 :osc2_level
@@ -99,9 +112,7 @@ class Microkorg::Program < BinData::Record
   string :filler_f0, length: 3
   # ---------
 
-
   string :offset_100, length: 16
-
 
   string :offset_110, length: 8
   uint8 :aeg_attk
