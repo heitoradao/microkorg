@@ -2,9 +2,8 @@
 
 require "microkorg"
 
-
-raw = File.binread('data/U_A1_Init_Program.mk2prog')
-
+files = Dir['data/*.mk2prog']
+raw = File.read files.sample
 program = Microkorg::Program.read raw
 
 puts program
