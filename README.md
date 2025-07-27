@@ -1,35 +1,36 @@
 # Microkorg
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/microkorg`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem can be used to inspect Microkorg2 programs.
+For now it can only inspect some attributes of programs, but it's growing fast.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Clone the repo and `bundle exec exe/microkorg`.
 
-```ruby
-gem 'microkorg'
-```
+Or you can build it with `rake build`, and install with `sudo gem install ./microkorg-0.1.0.gem`
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install microkorg
 
 ## Usage
 
-TODO: Write usage instructions here
+`bundle exec exe/microkorg`
+
+OR
+
+```ruby
+require 'microkorg'
+
+filename = 'program/C_A6_Init_Program.mk2prog'
+content = File.read filename
+program = Microkorg::Program.read content
+puts program
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+I am using `xxd -g 1 name_of_program.mk2prog` to transform binary to hex representation.
+Then I make some changes on the mk2, save the program, download to my notebook, export hex, compare the differences and map.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/microkorg.
+Send me patches!
+
