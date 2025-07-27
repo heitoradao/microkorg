@@ -35,24 +35,12 @@ class Microkorg::Program < BinData::Record
   uint8 :poly_mono
   string :filler_80_1, length: 3
 
-  uint8 :unison
-  string :filler_80_2, length: 1
-  # This works. Let's try to change uint8 for uint16 or int16
-  # uint8 :unison
-  # string :filler_80_2, length: 1
-
-  uint8 :unison_detune
-  string :filler_80_3, length: 1
-
-  uint8 :unison_spread
-  string :filler_80_4, length: 1
+  int16 :unison
+  int16 :unison_detune
+  int16 :unison_spread
 
   string :filler_80_5, length: 2
-
   string :filler_80_6, length: 4
-
-
-
 
 
   string :offset_90, length: 16
@@ -60,15 +48,14 @@ class Microkorg::Program < BinData::Record
   # ----------------------------------
   # Start OSC 1
   # Offset a0
-  uint8 :osc1_wave
+  int16 :osc1_wave
   # 0 = saw
   # 1 = square
 
-  uint8 :unknow_a0_1
-  uint8 :osc1_shape
-  string :filler_a0_1, length: 5
-  uint8 :osc1_level
-  string :filler_a0_2, length: 3
+  int16 :osc1_shape
+  string :filler_a0_1, length: 4
+  int16 :osc1_level
+  string :filler_a0_2, length: 2
 
   # Semitones can be negative too
   int16 :osc1_semitones
@@ -79,30 +66,27 @@ class Microkorg::Program < BinData::Record
   string :offset_b0, length: 8
   # -------------------------------
   # Start OSC 2
-  uint8 :osc2_wave
-  uint8 :osc2_unknow_1
-
-  uint8 :osc2_shape
-  string :offset_b0_2, length: 5
-  uint8 :osc2_level
-  string :filler_c0, length: 3
-  uint8 :osc2_semitones
-  string :offset_c0, length: 11
+  int16 :osc2_wave
+  int16 :osc2_shape
+  string :offset_b0_2, length: 4
+  int16 :osc2_level
+  string :filler_c0, length: 2
+  int16 :osc2_semitones
+  string :offset_c0, length: 10
 
   # ------------------------------------
   # Start OSC 3
-  uint8 :osc3_wave
-  uint8 :osc3_unknow
-  uint8 :osc3_shape
-  string :offset_d0, length: 5
-  uint8 :osc3_level
-  string :filler_d0, length: 3
-  uint8 :osc3_semitones
-  string :filler, length: 3
+  int16 :osc3_wave
+  int16 :osc3_shape
+  string :offset_d0, length: 4
+  int16 :osc3_level
+  string :filler_d0, length: 2
+  int16 :osc3_semitones
+  string :filler, length: 2
 
+  string :offset_e0_1, length: 10
 
-
-  string :offset_e0, length: 12
+  string :offset_e0_2, length: 2 # probably the noise type
   uint8 :noise_level
   string :filler_e0, length: 3
 
@@ -161,8 +145,8 @@ class Microkorg::Program < BinData::Record
   string :offset_320, length: 16
 
   string :offset_330, length: 8
-  uint8 :tempo
-  string :filler_330_1, length: 7
+  int16 :tempo
+  string :filler_330_1, length: 6
 
   string :offset_340, length: 16
   string :offset_350, length: 16
@@ -246,14 +230,17 @@ class Microkorg::Program < BinData::Record
       MicroKorg2 Patch - Nome: #{name.strip}
       tempo: #{tempo}
       OSC1:
+         wave: #{osc1_wave}
          level: #{osc1_level}
          shape: #{osc1_shape}
          semitones: #{osc1_semitones}
       OSC2:
+         wave: #{osc2_wave}
          level: #{osc2_level}
          shape: #{osc2_shape}
          semitones: #{osc2_semitones}
       OSC3:
+         wave: #{osc3_wave}
          level: #{osc3_level}
          shape: #{osc3_shape}
          semitones: #{osc3_semitones}
