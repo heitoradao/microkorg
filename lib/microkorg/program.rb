@@ -58,8 +58,7 @@ class Microkorg::Program < BinData::Record
   int16 :osc1_level
   string :filler_a0_2, length: 2
   int16 :osc1_semitones
-
-  string :filler_a0_4, length: 2
+  int16 :osc1_finetune
 
   string :offset_b0, length: 8
   # -------------------------------
@@ -70,7 +69,8 @@ class Microkorg::Program < BinData::Record
   int16 :osc2_level
   string :filler_c0, length: 2
   int16 :osc2_semitones
-  string :offset_c0, length: 10
+  int16 :osc2_finetune
+  string :offset_c0, length: 8
 
   # ------------------------------------
   # Start OSC 3
@@ -80,15 +80,17 @@ class Microkorg::Program < BinData::Record
   int16 :osc3_level
   string :filler_d0, length: 2
   int16 :osc3_semitones
-  string :filler, length: 2
+  int16 :osc3_finetune
 
-  string :offset_e0_1, length: 10
+  string :offset_e0_1, length: 8
+  int16 :noise_type
+  # 1 = HPF
 
-  string :offset_e0_2, length: 2 # probably the noise type
+  string :noise_x, length: 2 # unknown yet
   int16 :noise_level
   string :filler_e0, length: 2
 
-  # ----------
+  # ---------- F0
   string :offset_f0, length: 12
   int16 :resonance
   string :filler_f0, length: 2
@@ -105,8 +107,25 @@ class Microkorg::Program < BinData::Record
   string :offset_120, length: 16
   string :offset_130, length: 16
   string :offset_140, length: 16
-  string :offset_150, length: 16
-  string :offset_160, length: 16
+
+  # Offset 150, patches
+  string :offset_150, length: 8
+  int16 :patch1_connected
+  int16 :offset150_unknow_1
+  int16 :offset150_unknow_2
+  int16 :offset150_unknow_3
+  # string :filler_150, length: 8
+
+
+  # offset 160
+  int16 :patch1_intensity
+  string :filler_160, length: 6
+  int16 :patch2_connected
+  int16 :patch2_unknow1
+  int16 :patch2_unknow2
+  int16 :patch2_unknow3
+
+
   string :offset_170, length: 16
   string :offset_180, length: 16
   string :offset_190, length: 16
@@ -140,7 +159,8 @@ class Microkorg::Program < BinData::Record
 
   string :offset_330, length: 8
   int16 :tempo
-  string :filler_330_1, length: 6
+  int16 :argegiator_on
+  string :filler_330_1, length: 4
 
   string :offset_340, length: 16
   string :offset_350, length: 16
