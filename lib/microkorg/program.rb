@@ -6,7 +6,11 @@ class Microkorg::Program < BinData::Record
   # Offset 00
   # Cabeçalho
   string :header, length: 8
-  string :filler_00, length: 8
+  int16 :offset_00_5
+  int16 :offset_00_6
+  int16 :offset_00_7
+  int16 :offset_00_8
+  #string :filler_00, length: 8
 
   # Offset 10
   string :filler_10_1, length: 4
@@ -23,7 +27,16 @@ class Microkorg::Program < BinData::Record
   int16 :unknow_30_1
   string :filler_30_3, length: 4
 
-  string :offset_40, length: 16
+  #string :offset_40, length: 16
+  # offset 40
+  int16 :offset_40_1
+  int16 :offset_40_2
+  int16 :offset_40_3
+  int16 :offset_40_4
+  int16 :offset_40_5
+  int16 :offset_40_6
+  int16 :offset_40_7
+  int16 :offset_40_8
 
   # offset 50
   int16 :offset_50_1
@@ -36,7 +49,16 @@ class Microkorg::Program < BinData::Record
   int16 :offset_50_8
 
   string :offset_60, length: 16
-  string :offset_70, length: 16
+  
+  # offset 70
+  int16 :offset_70_1
+  int16 :offset_70_2
+  int16 :offset_70_3
+  int16 :offset_70_4
+  int16 :timbre1_level
+  int16 :timble1_pan
+  int16 :offset_70_7
+  int16 :offset_70_8
 
   # -------------------
   # Unison
@@ -50,8 +72,15 @@ class Microkorg::Program < BinData::Record
   int16 :unison_x
   string :filler_80_3, length: 4
 
-
-  string :offset_90, length: 16
+  # offset 90
+  int16 :timbre1_portamento
+  int16 :offset_90_2
+  int16 :timbre1_transpose
+  int16 :timbre1_finetune
+  int16 :offset_90_5
+  int16 :offset_90_6
+  int16 :offset_90_7
+  int16 :offset_90_8
 
   # ----------------------------------
   # Start OSC 1
@@ -119,7 +148,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_100_4
   int16 :offset_100_5
 
-  string :offset_110, length: 8
+  # offset 110
+  int16 :offset_110_1
+  int16 :offset_110_2
+  string :offset_110, length: 4
   int16 :aeg_attack
   int16 :aeg_decay
   int16 :aeg_sustain
@@ -205,14 +237,46 @@ class Microkorg::Program < BinData::Record
   string :offset_1b0_2, length: 8
 
   string :offset_1c0, length: 16
-  string :offset_1d0, length: 16
+
+
+
+  #############
+  # Timbre 2
+  #############
+
+
+  # offset 1d0
+  int16 :offset_1d0_1
+  int16 :offset_1d0_2
+  int16 :offset_1d0_3
+  int16 :offset_1d0_4
+  int16 :timbre2_level
+  int16 :timbre_2_pan
+  int16 :offset_1d0_7
+  int16 :offset_1d0_8
+  
   string :offset_1e0, length: 16
  
   # offset 1f0
-  string :offset_1f0_1, length: 8
-  string :offset_1f0_2, length: 8
+  int16 :timbre2_portamento
+  int16 :offset_1f0_2
+  int16 :timbre2_transpose
+  int16 :timbre2_finetune
+  int16 :offset_1f0_5
+  int16 :offset_1f0_6
+  int16 :offset_1f0_7
+  int16 :offset_1f0_8
 
-  string :offset_200, length: 16
+  # offset 200
+  int16 :timbre2_osc1_wave
+  int16 :offset_200_2
+  int16 :offset_200_3
+  int16 :offset_200_4
+  int16 :offset_200_5
+  int16 :offset_200_6
+  int16 :offset_200_7
+  int16 :offset_200_8
+
   string :offset_210, length: 16
   string :offset_220, length: 16
   string :offset_230, length: 16
