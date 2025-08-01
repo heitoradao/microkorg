@@ -417,13 +417,29 @@ class Microkorg::Program < BinData::Record
   int16 :mod_on
   int16 :mod_type
 
-  string :offset_460, length: 16
+  # offset 460
+  int16 :offset_460_1
+  int16 :offset_460_2
+  int16 :offset_460_3
+  int16 :offset_460_4
+  int16 :offset_460_5
+  int16 :offset_460_6 # mod_sub_type
+  int16 :mod_speed
+  int16 :mod_detpth
+  #string :offset_460, length: 16
 
 
   # offset 470
   int16 :offset_470_1
-  string :offset_470_2, length: 6
-  string :offset_470_3, length: 8
+  int16 :offset_470_2
+  int16 :offset_470_3
+  int16 :offset_470_4
+  int16 :offset_470_5
+  int16 :offset_470_6
+  int16 :offset_470_7
+  int16 :offset_470_8
+  #string :offset_470_2, length: 6
+  #string :offset_470_3, length: 8
 
   string :offset_480, length: 16
   string :offset_490, length: 16
