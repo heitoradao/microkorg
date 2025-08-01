@@ -22,28 +22,30 @@ class Microkorg::Program < BinData::Record
   # Offset 30
   string :filler_30_1, length: 4
   int16 :genre
-  string :filler_30_2, length: 4
-  int16 :unknow_30_1
-  string :filler_30_3, length: 4
+  int16 :offset_30_2
+  int16 :offset_30_3
+  int16 :knob1_assign
+  int16 :offset_30_5
+  int16 :offset_30_6
 
   #string :offset_40, length: 16
   # offset 40
   int16 :offset_40_1
-  int16 :offset_40_2
+  int16 :knob2_assign
   int16 :offset_40_3
   int16 :offset_40_4
   int16 :offset_40_5
-  int16 :offset_40_6
+  int16 :knob3_assign
   int16 :offset_40_7
   int16 :offset_40_8
 
   # offset 50
   int16 :offset_50_1
-  int16 :offset_50_2
+  int16 :knob4_assign
   int16 :offset_50_3
   int16 :offset_50_4
   int16 :offset_50_5
-  int16 :offset_50_6
+  int16 :knob5_assign
   int16 :offset_50_7
   int16 :offset_50_8
 
@@ -71,14 +73,12 @@ class Microkorg::Program < BinData::Record
   string :filler_80_3, length: 4
 
   # offset 90
-  int16 :t1_portamento
-  int16 :offset_90_2
+  int16 :t1_porta_time
+  int16 :t1_porta_mode
   int16 :t1_transpose
   int16 :t1_finetune
-  int16 :offset_90_5
-  int16 :offset_90_6
-  int16 :offset_90_7
-  int16 :offset_90_8
+  int16 :t1_pb_range
+  string :offset_90, length: 6
 
   # ----------------------------------
   # Start OSC 1
@@ -86,7 +86,7 @@ class Microkorg::Program < BinData::Record
   int16 :t1_osc1_wave
   int16 :t1_osc1_shape
   int16 :t1_osc1_mod
-  int16 :t1_osc1_unknow1
+  int16 :t1_osc1_sample
   int16 :t1_osc1_level
   int16 :t1_osc1_unknow2
   int16 :t1_osc1_semitones
@@ -98,7 +98,7 @@ class Microkorg::Program < BinData::Record
   int16 :t1_osc2_wave
   int16 :t1_osc2_shape
   int16 :t1_osc2_mod
-  int16 :t1_osc2_unknow1
+  int16 :t1_osc2_sample
   int16 :t1_osc2_level
   int16 :t1_osc2_unknow2
   int16 :t1_osc2_semitones
@@ -111,7 +111,7 @@ class Microkorg::Program < BinData::Record
   int16 :t1_osc3_wave
   int16 :t1_osc3_shape
   int16 :t1_osc3_mod_type
-  int16 :t1_osc3_unknow1
+  int16 :t1_osc3_sample
   int16 :t1_osc3_level
   int16 :t1_osc3_unknow2
   int16 :t1_osc3_semitones
@@ -239,21 +239,19 @@ class Microkorg::Program < BinData::Record
   string :offset_1e0, length: 16
 
   # offset 1f0
-  int16 :t2_portamento
-  int16 :offset_1f0_2
+  int16 :t2_porta_time
+  int16 :t2_porta_mode
   int16 :t2_transpose
   int16 :t2_finetune
-  int16 :offset_1f0_5
-  int16 :offset_1f0_6
-  int16 :offset_1f0_7
-  int16 :offset_1f0_8
+  int16 :t2_pb_range
+  string :offset_1f0, length: 6
 
   # offset 200
   # OSC 1
   int16 :t2_osc1_wave
   int16 :t2_osc1_shape
   int16 :t2_osc1_mod
-  int16 :t2_osc1_unknow1
+  int16 :t2_osc1_sample
   int16 :t2_osc1_level
   int16 :t2_osc1_unknow2
   int16 :t2_osc1_semitones
@@ -263,7 +261,7 @@ class Microkorg::Program < BinData::Record
   int16 :t2_osc2_wave
   int16 :t2_osc2_shape
   int16 :t2_osc2_mod
-  int16 :t2_osc2_unknow1
+  int16 :t2_osc2_sample
   int16 :t2_osc2_level
   int16 :t2_osc2_unknow2
   int16 :t2_osc2_semitones
@@ -273,7 +271,7 @@ class Microkorg::Program < BinData::Record
   int16 :t2_osc3_wave
   int16 :t2_osc3_shape
   int16 :t2_osc3_mod_type
-  int16 :t2_osc3_unknow1
+  int16 :t2_osc3_sample
   int16 :t2_osc3_level
   int16 :t2_osc3_unknow2
   int16 :t2_osc3_semitones
@@ -407,7 +405,18 @@ class Microkorg::Program < BinData::Record
   string :offset_420, length: 16
   string :offset_430, length: 16
   string :offset_440, length: 16
-  string :offset_450, length: 16
+  
+  # offset 450
+  #string :offset_450, length: 16
+  int16 :offset_450_1
+  int16 :offset_450_2
+  int16 :offset_450_3
+  int16 :offset_450_4
+  int16 :offset_450_5
+  int16 :offset_450_6
+  int16 :mod_on
+  int16 :mod_type
+
   string :offset_460, length: 16
 
 
@@ -418,7 +427,11 @@ class Microkorg::Program < BinData::Record
 
   string :offset_480, length: 16
   string :offset_490, length: 16
-  string :offset_4a0, length: 16
+
+  # offset 4a0
+  string :offset_4a0, length: 12
+  int16 :offset_4a0_7
+  int16 :offset_4a0_8
 
   # offset 4b0
   int16 :offset_4b0_1
@@ -431,7 +444,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_4b0_8
 
   string :offset_4c0, length: 16
-  string :offset_4d0, length: 16
+  string :offset_4d0, length: 12
+  int16 :reverb_on
+  int16 :reverb_type
+
   string :offset_4e0, length: 16
   string :offset_4f0, length: 16
 
