@@ -423,12 +423,69 @@ class Microkorg::Program < BinData::Record
 
   string :offset_350, length: 16
   string :offset_360, length: 16
-  string :offset_370, length: 16
-  string :offset_380, length: 16
-  string :offset_390, length: 16
-  string :offset_3a0, length: 16
-  string :offset_3b0, length: 16
-  string :offset_3c0, length: 16
+  
+  # offset 370
+  string :offset_370, length: 8
+  int16 :vocoder_on
+  int16 :vocoder_mic_direct
+  int16 :vocoder_synth_dry_wet
+  int16 :vocoder_formant
+
+  # offset 380
+  int16 :vocoder_resonance
+  int16 :vocoder_env_follower_sens
+  int16 :offset_380_3
+  int16 :offset_380_4
+  int16 :band1_level
+  int16 :band2_level
+  int16 :band3_level
+  int16 :band4_level
+
+  # offset 390
+  int16 :band5_level
+  int16 :band6_level
+  int16 :band7_level
+  int16 :band8_level
+  int16 :band9_level
+  int16 :band10_level
+  int16 :band11_level
+  int16 :band12_level
+  # string :offset_390, length: 16
+
+
+  # offset 3a0
+  int16 :band13_level
+  int16 :band14_level
+  int16 :band15_level
+  int16 :band16_level
+  int16 :band1_pan
+  int16 :band2_pan
+  int16 :band3_pan
+  int16 :band4_pan
+
+  # offset 3b0
+  int16 :band5_pan
+  int16 :band6_pan
+  int16 :band7_pan
+  int16 :band8_pan
+  int16 :band9_pan
+  int16 :band10_pan
+  int16 :band11_pan
+  int16 :band12_pan
+  # string :offset_3b0, length: 16
+
+  # offset 3c0
+  int16 :band13_pan
+  int16 :band14_pan
+  int16 :band15_pan
+  int16 :band16_pan
+  int16 :offset_3c0_5
+  int16 :offset_3c0_6
+  int16 :offset_3c0_7
+  int16 :offset_3c0_8
+  # string :offset_3c0, length: 16
+
+
   string :offset_3d0, length: 16
   string :offset_3e0, length: 16
   string :offset_3f0, length: 16
