@@ -152,14 +152,29 @@ class Microkorg::Program < BinData::Record
   # offset 120
   int16 :offset_120_1
   int16 :t1_aeg_velocity
-  string :offset_120, length: 12
+  string :offset_120, length: 4
+  int16 :t1_lfo1_wave
+  int16 :t1_lfo1_mode
+  int16 :t1_lfo1_freq
+  int16 :t1_lfo1_unknow
 
 
   # offset 130
-  string :offset_130, length: 16
+  int16 :offset_130_1
+  int16 :offset_130_2
+  int16 :offset_130_3
+  int16 :t1_lfo1_smooth
+  string :offset_130, length: 8
 
   # offset 140
-  string :offset_140, length: 16
+  int16 :offset_140_1
+  int16 :offset_140_2
+  int16 :offset_140_3
+  int16 :offset_140_4
+  int16 :offset_140_5
+  int16 :offset_140_6
+  int16 :t1_lfo2_delay
+  int16 :offset_140_8
 
   ###########
   # Patches
