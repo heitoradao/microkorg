@@ -431,31 +431,41 @@ class Microkorg::Program < BinData::Record
 
   # offset 470
   int16 :offset_470_1
-  int16 :offset_470_2
-  int16 :offset_470_3
-  int16 :offset_470_4
+  int16 :mod_low_cut
+  int16 :mod_manual
+  int16 :mod_width
   int16 :offset_470_5
-  int16 :offset_470_6
+  int16 :mod_dry_wet
   int16 :offset_470_7
   int16 :offset_470_8
   #string :offset_470_2, length: 6
   #string :offset_470_3, length: 8
 
   string :offset_480, length: 16
-  string :offset_490, length: 16
+  
+  # offset 490
+  #string :offset_490, length: 16
+  int16 :offset_490_1
+  int16 :offset_490_2
+  int16 :offset_490_3
+  int16 :offset_490_4
+  int16 :offset_490_5
+  int16 :offset_490_6
+  int16 :delay_on
+  int16 :delay_type
 
   # offset 4a0
   string :offset_4a0, length: 12
-  int16 :offset_4a0_7
-  int16 :offset_4a0_8
+  int16 :delay_width
+  int16 :delay_time
 
   # offset 4b0
-  int16 :offset_4b0_1
-  int16 :offset_4b0_2
+  int16 :delay_depth
+  int16 :delay_low_cut
   int16 :offset_4b0_3
-  int16 :offset_4b0_4
-  int16 :offset_4b0_5
-  int16 :offset_4b0_6
+  int16 :delay_offset
+  int16 :delay_feedback
+  int16 :delay_dry_wet
   int16 :offset_4b0_7
   int16 :offset_4b0_8
 
@@ -464,8 +474,22 @@ class Microkorg::Program < BinData::Record
   int16 :reverb_on
   int16 :reverb_type
 
-  string :offset_4e0, length: 16
-  string :offset_4f0, length: 16
+  # offset 4e0
+  string :offset_4e0, length: 12
+  int16 :offset_4e0_7
+  int16 :reverb_time
+
+  # offset 4f0
+  # string :offset_4f0, length: 16
+  int16 :reverb_depth
+  int16 :reverb_damp
+  int16 :reverb_pre_delay
+  int16 :reverb_width
+  int16 :reverb_size
+  int16 :reverb_dry_wet
+  int16 :offset_4f0_7
+  int16 :offset_4f0_8
+
 
   string :offset_500, length: 16
   string :offset_510, length: 16
