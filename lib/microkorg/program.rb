@@ -406,13 +406,20 @@ class Microkorg::Program < BinData::Record
   # offset 330
   string :offset_330, length: 8
   int16 :tempo
-  int16 :arpegiator_on
-  int16 :offset_330_1
-  int16 :offset_330_2
+  int16 :arp_on
+  int16 :arp_offset_330_7 # target batch on ?
+  int16 :arp_offset_330_8
 
   # offset 340
-  int16 :offset_340_1
-  string :offset_340, length: 14
+  int16 :arp_unknow1
+  int16 :arp_octave
+  int16 :arp_unknow3 # target_batch_on ?
+  int16 :arp_gate_time
+  int16 :arp_last_step
+  int16 :arp_swing
+  int16 :arp_unknow7
+  int16 :arp_unknow8
+  #string :offset_340, length: 14
 
   string :offset_350, length: 16
   string :offset_360, length: 16
