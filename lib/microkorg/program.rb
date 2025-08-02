@@ -326,10 +326,17 @@ class Microkorg::Program < BinData::Record
   # offset 270
   int16 :offset_270_1
   int16 :t2_aeg_velocity
-  string :offset_270, length: 12
+  string :offset_270, length: 4
+  int16 :t2_lfo1_wave
+  int16 :t2_lfo1_mode
+  int16 :t2_lfo1_freq
+  int16 :t2_lfo1_unknow
 
   # offset 280
-  string :offset_280_1, length: 8
+  int16 :t2_lfo1_unknow1
+  int16 :t2_lfo1_unknow2
+  int16 :t2_lfo1_unknow3
+  int16 :t2_lfo1_smooth
   string :offset_280_2, length: 8
 
   string :offset_290, length: 16
