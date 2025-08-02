@@ -135,13 +135,13 @@ class Microkorg::Program < BinData::Record
   # Offset 100
   int16 :t1_filter_drive #?
   string :t1_offset_100, length: 6
-  int16 :t1_offset_100_2
-  int16 :t1_offset_100_3
-  int16 :t1_offset_100_4
-  int16 :t1_offset_100_5
+  int16 :t1_filter_attack
+  int16 :t1_filter_decay
+  int16 :t1_filter_sustain
+  int16 :t1_filter_release
 
   # offset 110
-  int16 :offset_110_1
+  int16 :offset_filter_intensity
   int16 :offset_110_2
   string :offset_110, length: 4
   int16 :t1_aeg_attack
@@ -295,10 +295,14 @@ class Microkorg::Program < BinData::Record
   # offset 250
   int16 :t2_filter_drive
   string :offset_250_1, length: 6
-  string :offset_250, length: 8
+  int16 :t2_filter_attack
+  int16 :t2_filter_decay
+  int16 :t2_filter_sustain
+  int16 :t2_filter_release
 
   # offset 260
-  string :offset_260, length: 8
+  int16 :t2_filter_intensity
+  string :offset_260, length: 6
   int16 :t2_aeg_attack
   int16 :t2_aeg_decay
   int16 :t2_aeg_sustain
@@ -490,11 +494,21 @@ class Microkorg::Program < BinData::Record
   int16 :offset_4f0_7
   int16 :offset_4f0_8
 
-
   string :offset_500, length: 16
   string :offset_510, length: 16
-  string :offset_520, length: 16
-  string :offset_530, length: 12
+
+  # offset 520
+  int16 :offset_520_1
+  string :offset_520, length: 10
+  int16 :eq_on
+  int16 :offset_520_8_low_freq # eq_low_freq ?
+
+  # offset 530
+  int16 :offset_530_high_freq # eq_high_freq ?
+  int16 :eq_low_gain
+  int16 :eq_high_gain
+  int16 :eq_feedback
+  string :offset_530, length: 4
   #string :checksum, length: 4
   uint32 :checksum
 
