@@ -4,24 +4,30 @@
 require "bundler/setup"
 require "microkorg"
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
 
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
 
 
-files = Dir['data/*.mk2prog']
-puts files, "\n"
-print "Digite o nome do arquivo: "
-filename = gets.chomp
+filename = "data/C_A3_Init_Program.mk2prog"
 
-p = Microkorg::Program.read File.open filename
-puts p
 
+def inspect_jexus
+  files = Dir['data/jexus/*.mk2prog']
+  puts files, "\n"
+  print "Digite o nome do arquivo: "
+  filename = gets.chomp
+end
+
+if ARGV.size == 1
+  filename = "data/C_#{ARGV.shift.upcase}_Init_Program.mk2prog"
+end
+puts filename
+
+raw_content = File.binread(filename)
+p = Microkorg::Program.read(raw_content)
 
 require "irb"
 IRB.start(__FILE__)
-
 
