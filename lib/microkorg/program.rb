@@ -6,171 +6,486 @@ class Microkorg::Program < BinData::Record
   # Offset 00
   # Cabeçalho
   string :header, length: 8
-  string :filler_00, length: 8
+  int16 :offset_00_5
+  int16 :offset_00_6
+  int16 :offset_00_7
+  int16 :offset_00_8
+  #string :filler_00, length: 8
 
   # Offset 10
   string :filler_10_1, length: 4
   string :name, length: 20
   int16 :timbre_mode_a
   int16 :octave_shift
-  #string :filler1, length: 2
   string :filler2, length: 4
 
   # Offset 30
   string :filler_30_1, length: 4
   int16 :genre
-  string :filler_30_2, length: 4
-  int16 :unknow_30_1
-  string :filler_30_3, length: 4
+  int16 :offset_30_2
+  int16 :offset_30_3
+  int16 :knob1_assign
+  int16 :offset_30_5
+  int16 :offset_30_6
 
-  string :offset_40, length: 16
-  string :offset_50, length: 16
+  #string :offset_40, length: 16
+  # offset 40
+  int16 :offset_40_1
+  int16 :knob2_assign
+  int16 :offset_40_3
+  int16 :offset_40_4
+  int16 :offset_40_5
+  int16 :knob3_assign
+  int16 :offset_40_7
+  int16 :offset_40_8
+
+  # offset 50
+  int16 :offset_50_1
+  int16 :knob4_assign
+  int16 :offset_50_3
+  int16 :offset_50_4
+  int16 :offset_50_5
+  int16 :knob5_assign
+  int16 :offset_50_7
+  int16 :offset_50_8
+
   string :offset_60, length: 16
-  string :offset_70, length: 16
+
+  # offset 70
+  int16 :offset_70_1
+  int16 :offset_70_2
+  int16 :offset_70_3
+  int16 :offset_70_4
+  int16 :timbre1_level
+  int16 :timble1_pan
+  int16 :offset_70_7
+  int16 :offset_70_8
 
   # -------------------
   # Unison
   # Offset 80
   int16 :poly_mono
-  string :filler_80_1, length: 2
-
+  int16 :offset_80_1
   int16 :unison
   int16 :unison_detune
   int16 :unison_spread
   int16 :unison_x
-  string :filler_80_6, length: 4
+  string :filler_80_3, length: 4
 
-
-  string :offset_90, length: 16
+  # offset 90
+  int16 :t1_porta_time
+  int16 :t1_porta_mode
+  int16 :t1_transpose
+  int16 :t1_finetune
+  int16 :t1_pb_range
+  string :offset_90, length: 6
 
   # ----------------------------------
   # Start OSC 1
   # Offset a0
-  int16 :osc1_wave
-  # 0 = saw
-  # 1 = square
-  # 2 = triangle
-  # 3 = sine
-  # 4
-  # 5
-  int16 :osc1_shape
-  string :filler_a0_1, length: 4
-  int16 :osc1_level
-  string :filler_a0_2, length: 2
-  int16 :osc1_semitones
-  int16 :osc1_finetune
+  int16 :t1_osc1_wave
+  int16 :t1_osc1_shape
+  int16 :t1_osc1_mod
+  int16 :t1_osc1_sample
+  int16 :t1_osc1_level
+  int16 :t1_osc1_unknow2
+  int16 :t1_osc1_semitones
+  int16 :t1_osc1_finetune
 
-  string :offset_b0, length: 8
+  string :t1_offset_b0, length: 8
   # -------------------------------
   # Start OSC 2
-  int16 :osc2_wave
-  int16 :osc2_shape
-  string :offset_b0_2, length: 4
-  int16 :osc2_level
-  string :filler_c0, length: 2
-  int16 :osc2_semitones
-  int16 :osc2_finetune
-  string :offset_c0, length: 8
+  int16 :t1_osc2_wave
+  int16 :t1_osc2_shape
+  int16 :t1_osc2_mod
+  int16 :t1_osc2_sample
+  int16 :t1_osc2_level
+  int16 :t1_osc2_unknow2
+  int16 :t1_osc2_semitones
+  int16 :t1_osc2_finetune
+
+  string :t1_offset_c0, length: 8
 
   # ------------------------------------
   # Start OSC 3
-  int16 :osc3_wave
-  int16 :osc3_shape
-  string :offset_d0, length: 4
-  int16 :osc3_level
-  string :filler_d0, length: 2
-  int16 :osc3_semitones
-  int16 :osc3_finetune
+  int16 :t1_osc3_wave
+  int16 :t1_osc3_shape
+  int16 :t1_osc3_mod_type
+  int16 :t1_osc3_sample
+  int16 :t1_osc3_level
+  int16 :t1_osc3_unknow2
+  int16 :t1_osc3_semitones
+  int16 :t1_osc3_finetune
 
+  # offset e0
   string :offset_e0_1, length: 8
-  int16 :noise_type
-  # 1 = HPF
+  int16 :t1_noise_type
+  int16 :t1_noise_color
+  int16 :t1_noise_level
+  int16 :t1_noise_unknow
 
-  string :noise_x, length: 2 # unknown yet
-  int16 :noise_level
-  string :filler_e0, length: 2
-
-  # ---------- F0
-  string :offset_f0, length: 12
-  int16 :resonance
-  string :filler_f0, length: 2
+  # Offset F0
+  string :offset_f0, length: 8
+  int16 :t1_filter_type
+  int16 :t1_filter_cutoff
+  int16 :t1_filter_resonance
+  int16 :t1_filter_keytrack # -63 aparece como -200 no teclado
   # ---------
 
-  string :offset_100, length: 16
+  # Offset 100
+  int16 :t1_filter_drive #?
+  string :t1_offset_100, length: 6
+  int16 :t1_filter_attack
+  int16 :t1_filter_decay
+  int16 :t1_filter_sustain
+  int16 :t1_filter_release
 
-  string :offset_110, length: 8
-  int16 :aeg_attk
-  int16 :aeg_decay
-  int16 :aeg_sustain
-  int16 :aeg_rel
+  # offset 110
+  int16 :offset_filter_intensity
+  int16 :offset_110_2
+  string :offset_110, length: 4
+  int16 :t1_aeg_attack
+  int16 :t1_aeg_decay
+  int16 :t1_aeg_sustain
+  int16 :t1_aeg_release
 
-  string :offset_120, length: 16
-  string :offset_130, length: 16
-  string :offset_140, length: 16
+  # offset 120
+  int16 :offset_120_1
+  int16 :t1_aeg_velocity
+  string :offset_120, length: 4
+  int16 :t1_lfo1_wave
+  int16 :t1_lfo1_mode
+  int16 :t1_lfo1_freq
+  int16 :t1_lfo1_unknow
 
-  # Offset 150, patches
+
+  # offset 130
+  int16 :offset_130_1
+  int16 :offset_130_2
+  int16 :offset_130_3
+  int16 :t1_lfo1_smooth
+  string :offset_130, length: 8
+
+  # offset 140
+  int16 :offset_140_1
+  int16 :offset_140_2
+  int16 :offset_140_3
+  int16 :offset_140_4
+  int16 :offset_140_5
+  int16 :offset_140_6
+  int16 :t1_lfo2_delay
+  int16 :offset_140_8
+
+  ###########
+  # Patches
+  ###########
+
+  # Offset 150
   string :offset_150, length: 8
-  int16 :patch1_connected
-  int16 :offset150_unknow_1
-  int16 :offset150_unknow_2
-  int16 :offset150_unknow_3
-  # string :filler_150, length: 8
-
+  int16 :t1_patch1_connected
+  int16 :t1_patch1_src1
+  int16 :t1_patch1_src2
+  int16 :t1_patch1_dst3
 
   # offset 160
-  int16 :patch1_intensity
+  int16 :t1_patch1_intensity
   string :filler_160, length: 6
-  int16 :patch2_connected
-  int16 :patch2_unknow1
-  int16 :patch2_unknow2
-  int16 :patch2_unknow3
+  int16 :t1_patch2_connected
+  int16 :t1_patch2_src1
+  int16 :t1_patch2_src2
+  int16 :t1_patch2_dst3
 
+  # offset 170
+  int16 :t1_patch2_intensity
+  string :offset_170_1, length: 6
+  int16 :t1_patch3_connected
+  int16 :t1_patch3_src1
+  int16 :t1_patch3_src2
+  int16 :t1_patch3_dst3
 
-  string :offset_170, length: 16
-  string :offset_180, length: 16
-  string :offset_190, length: 16
-  string :offset_1a0, length: 16
-  string :offset_1b0, length: 16
+  # offset 180
+  int16 :t1_patch3_intensity
+  string :offset_180_1, length: 6
+  int16 :t1_patch4_connected
+  int16 :t1_patch4_src1
+  int16 :t1_patch4_src2
+  int16 :t1_patch4_dst
+
+  # offset 190
+  int16 :t1_patch4_intensity
+  string :offset_190_1, length: 6
+  int16 :t1_patch5_connected
+  int16 :t1_patch5_src1
+  int16 :t1_patch5_src2
+  int16 :t1_patch5_dst
+
+  # offset 1a0
+  int16 :t1_patch5_intensity
+  string :offset_1a0_1, length: 6
+  int16 :t1_patch6_connected
+  int16 :t1_patch6_src1
+  int16 :t1_patch6_src2
+  int16 :t1_patch6_dst
+
+  # offset 1b0
+  int16 :t1_patch6_intensity
+  string :offset_1b0_1, length: 6
+  string :offset_1b0_2, length: 8
+
   string :offset_1c0, length: 16
-  string :offset_1d0, length: 16
+
+
+
+  #############
+  # Timbre 2
+  #############
+
+
+  # offset 1d0
+  int16 :offset_1d0_1
+  int16 :offset_1d0_2
+  int16 :offset_1d0_3
+  int16 :offset_1d0_4
+  int16 :t2_level
+  int16 :t2_pan
+  int16 :offset_1d0_7
+  int16 :offset_1d0_8
+
   string :offset_1e0, length: 16
-  string :offset_1f0, length: 16
 
-  string :offset_200, length: 16
-  string :offset_210, length: 16
-  string :offset_220, length: 16
-  string :offset_230, length: 16
-  string :offset_240, length: 16
-  string :offset_250, length: 16
-  string :offset_260, length: 16
-  string :offset_270, length: 16
-  string :offset_280, length: 16
+  # offset 1f0
+  int16 :t2_porta_time
+  int16 :t2_porta_mode
+  int16 :t2_transpose
+  int16 :t2_finetune
+  int16 :t2_pb_range
+  string :offset_1f0, length: 6
+
+  # offset 200
+  # OSC 1
+  int16 :t2_osc1_wave
+  int16 :t2_osc1_shape
+  int16 :t2_osc1_mod
+  int16 :t2_osc1_sample
+  int16 :t2_osc1_level
+  int16 :t2_osc1_unknow2
+  int16 :t2_osc1_semitones
+  int16 :t2_osc1_finetune
+
+  # offset 210
+  int16 :t2_osc2_wave
+  int16 :t2_osc2_shape
+  int16 :t2_osc2_mod
+  int16 :t2_osc2_sample
+  int16 :t2_osc2_level
+  int16 :t2_osc2_unknow2
+  int16 :t2_osc2_semitones
+  int16 :t2_osc2_finetune
+
+  # offset 220
+  int16 :t2_osc3_wave
+  int16 :t2_osc3_shape
+  int16 :t2_osc3_mod_type
+  int16 :t2_osc3_sample
+  int16 :t2_osc3_level
+  int16 :t2_osc3_unknow2
+  int16 :t2_osc3_semitones
+  int16 :t2_osc3_finetune
+
+
+  # offset 230
+  string :offset_230_1, length: 8
+  int16 :t2_noise_type
+  int16 :t2_noise_color
+  int16 :t2_noise_level
+  int16 :t2_noise_unknow
+
+  # offset 240
+  string :offset_240, length: 8
+  int16 :t2_filter_type
+  int16 :t2_filter_cutoff
+  int16 :t2_filter_resonance
+  int16 :t2_filter_keytrack
+
+  # offset 250
+  int16 :t2_filter_drive
+  string :offset_250_1, length: 6
+  int16 :t2_filter_attack
+  int16 :t2_filter_decay
+  int16 :t2_filter_sustain
+  int16 :t2_filter_release
+
+  # offset 260
+  int16 :t2_filter_intensity
+  string :offset_260, length: 6
+  int16 :t2_aeg_attack
+  int16 :t2_aeg_decay
+  int16 :t2_aeg_sustain
+  int16 :t2_aeg_release
+
+  # offset 270
+  int16 :offset_270_1
+  int16 :t2_aeg_velocity
+  string :offset_270, length: 4
+  int16 :t2_lfo1_wave
+  int16 :t2_lfo1_mode
+  int16 :t2_lfo1_freq
+  int16 :t2_lfo1_unknow
+
+  # offset 280
+  int16 :t2_lfo1_unknow1
+  int16 :t2_lfo1_unknow2
+  int16 :t2_lfo1_unknow3
+  int16 :t2_lfo1_smooth
+  string :offset_280_2, length: 8
+
   string :offset_290, length: 16
-  string :offset_2a0, length: 16
-  string :offset_2b0, length: 16
-  string :offset_2c0, length: 16
-  string :offset_2d0, length: 16
-  string :offset_2e0, length: 16
-  string :offset_2f0, length: 16
 
-  string :offset_300, length: 16
+
+  ###########
+  # Patches
+  ###########
+
+  # offset 2a0
+  string :offset_2a0, length: 8
+  int16 :t2_patch1_connected
+  int16 :t2_patch1_src1
+  int16 :t2_patch1_src2
+  int16 :t2_patch1_dst3
+
+
+  #string :offset_2b0, length: 16
+  int16 :t2_patch1_intensity
+  string :filler_2b0, length: 6
+  int16 :t2_patch2_connected
+  int16 :t2_patch2_src1
+  int16 :t2_patch2_src2
+  int16 :t2_patch2_dst3
+
+
+  #string :offset_2c0, length: 16
+  int16 :t2_patch2_intensity
+  string :filler_2c0, length: 6
+  int16 :t2_patch3_connected
+  int16 :t2_patch3_src1
+  int16 :t2_patch3_src2
+  int16 :t2_patch3_dst3
+
+  #string :offset_2d0, length: 16
+  int16 :t2_patch3_intensity
+  string :filler_2d0, length: 6
+  int16 :t2_patch4_connected
+  int16 :t2_patch4_src1
+  int16 :t2_patch4_src2
+  int16 :t2_patch4_dst3
+
+  #string :offset_2e0, length: 16
+  int16 :t2_patch4_intensity
+  string :filler_2e0, length: 6
+  int16 :t2_patch5_connected
+  int16 :t2_patch5_src1
+  int16 :t2_patch5_src2
+  int16 :t2_patch5_dst3
+
+  #string :offset_2f0, length: 16
+  int16 :t2_patch5_intensity
+  string :filler_2f0, length: 6
+  int16 :t2_patch6_connected
+  int16 :t2_patch6_src1
+  int16 :t2_patch6_src2
+  int16 :t2_patch6_dst3
+
+  # offset 300
+  int16 :t2_patch6_intensity
+  string :offset_300_2, length: 6
+  string :offset_300_3, length: 8
+
   string :offset_310, length: 16
   string :offset_320, length: 16
 
+  # offset 330
   string :offset_330, length: 8
   int16 :tempo
-  int16 :argegiator_on
-  string :filler_330_1, length: 4
+  int16 :arp_on
+  int16 :arp_offset_330_7 # target batch on ?
+  int16 :arp_offset_330_8
 
-  string :offset_340, length: 16
+  # offset 340
+  int16 :arp_unknow1
+  int16 :arp_octave
+  int16 :arp_unknow3 # target_batch_on ?
+  int16 :arp_gate_time
+  int16 :arp_last_step
+  int16 :arp_swing
+  int16 :arp_unknow7
+  int16 :arp_unknow8
+  #string :offset_340, length: 14
+
   string :offset_350, length: 16
   string :offset_360, length: 16
-  string :offset_370, length: 16
-  string :offset_380, length: 16
-  string :offset_390, length: 16
-  string :offset_3a0, length: 16
-  string :offset_3b0, length: 16
-  string :offset_3c0, length: 16
+  
+  # offset 370
+  string :offset_370, length: 8
+  int16 :vocoder_on
+  int16 :vocoder_mic_direct
+  int16 :vocoder_synth_dry_wet
+  int16 :vocoder_formant
+
+  # offset 380
+  int16 :vocoder_resonance
+  int16 :vocoder_env_follower_sens
+  int16 :offset_380_3
+  int16 :offset_380_4
+  int16 :band1_level
+  int16 :band2_level
+  int16 :band3_level
+  int16 :band4_level
+
+  # offset 390
+  int16 :band5_level
+  int16 :band6_level
+  int16 :band7_level
+  int16 :band8_level
+  int16 :band9_level
+  int16 :band10_level
+  int16 :band11_level
+  int16 :band12_level
+  # string :offset_390, length: 16
+
+
+  # offset 3a0
+  int16 :band13_level
+  int16 :band14_level
+  int16 :band15_level
+  int16 :band16_level
+  int16 :band1_pan
+  int16 :band2_pan
+  int16 :band3_pan
+  int16 :band4_pan
+
+  # offset 3b0
+  int16 :band5_pan
+  int16 :band6_pan
+  int16 :band7_pan
+  int16 :band8_pan
+  int16 :band9_pan
+  int16 :band10_pan
+  int16 :band11_pan
+  int16 :band12_pan
+  # string :offset_3b0, length: 16
+
+  # offset 3c0
+  int16 :band13_pan
+  int16 :band14_pan
+  int16 :band15_pan
+  int16 :band16_pan
+  int16 :offset_3c0_5
+  int16 :offset_3c0_6
+  int16 :offset_3c0_7
+  int16 :offset_3c0_8
+  # string :offset_3c0, length: 16
+
+
   string :offset_3d0, length: 16
   string :offset_3e0, length: 16
   string :offset_3f0, length: 16
@@ -180,105 +495,189 @@ class Microkorg::Program < BinData::Record
   string :offset_420, length: 16
   string :offset_430, length: 16
   string :offset_440, length: 16
-  string :offset_450, length: 16
-  string :offset_460, length: 16
-  string :offset_470, length: 16
+  
+  # offset 450
+  #string :offset_450, length: 16
+  int16 :offset_450_1
+  int16 :offset_450_2
+  int16 :offset_450_3
+  int16 :offset_450_4
+  int16 :offset_450_5
+  int16 :offset_450_6
+  int16 :mod_on
+  int16 :mod_type
+
+  # offset 460
+  int16 :offset_460_1
+  int16 :offset_460_2
+  int16 :offset_460_3
+  int16 :offset_460_4
+  int16 :offset_460_5
+  int16 :offset_460_6 # mod_sub_type
+  int16 :mod_speed
+  int16 :mod_detpth
+  #string :offset_460, length: 16
+
+
+  # offset 470
+  int16 :offset_470_1
+  int16 :mod_low_cut
+  int16 :mod_manual
+  int16 :mod_width
+  int16 :offset_470_5
+  int16 :mod_dry_wet
+  int16 :offset_470_7
+  int16 :offset_470_8
+  #string :offset_470_2, length: 6
+  #string :offset_470_3, length: 8
+
   string :offset_480, length: 16
-  string :offset_490, length: 16
-  string :offset_4a0, length: 16
-  string :offset_4b0, length: 16
+  
+  # offset 490
+  #string :offset_490, length: 16
+  int16 :offset_490_1
+  int16 :offset_490_2
+  int16 :offset_490_3
+  int16 :offset_490_4
+  int16 :offset_490_5
+  int16 :offset_490_6
+  int16 :delay_on
+  int16 :delay_type
+
+  # offset 4a0
+  string :offset_4a0, length: 12
+  int16 :delay_width
+  int16 :delay_time
+
+  # offset 4b0
+  int16 :delay_depth
+  int16 :delay_low_cut
+  int16 :offset_4b0_3
+  int16 :delay_offset
+  int16 :delay_feedback
+  int16 :delay_dry_wet
+  int16 :offset_4b0_7
+  int16 :offset_4b0_8
+
   string :offset_4c0, length: 16
-  string :offset_4d0, length: 16
-  string :offset_4e0, length: 16
-  string :offset_4f0, length: 16
+  string :offset_4d0, length: 12
+  int16 :reverb_on
+  int16 :reverb_type
+
+  # offset 4e0
+  string :offset_4e0, length: 12
+  int16 :offset_4e0_7
+  int16 :reverb_time
+
+  # offset 4f0
+  # string :offset_4f0, length: 16
+  int16 :reverb_depth
+  int16 :reverb_damp
+  int16 :reverb_pre_delay
+  int16 :reverb_width
+  int16 :reverb_size
+  int16 :reverb_dry_wet
+  int16 :offset_4f0_7
+  int16 :offset_4f0_8
 
   string :offset_500, length: 16
   string :offset_510, length: 16
-  string :offset_520, length: 16
-  string :offset_530, length: 12
-  string :checksum, length: 4
+
+  # offset 520
+  int16 :offset_520_1
+  string :offset_520, length: 10
+  int16 :eq_on
+  int16 :offset_520_8_low_freq # eq_low_freq ?
+
+  # offset 530
+  int16 :offset_530_high_freq # eq_high_freq ?
+  int16 :eq_low_gain
+  int16 :eq_high_gain
+  int16 :eq_feedback
+  string :offset_530, length: 4
+  #string :checksum, length: 4
+  uint32 :checksum
 
 
 
-
-=begin
-  # Reservado / Padding
-  array  :reserved, type: :uint8, initial_length: 12
-
-  # Configurações de Osciladores
-  uint8  :osc1_wave
-  uint8  :osc1_mod
-  uint8  :osc2_wave
-  uint8  :osc2_mod
-
-  # Configurações de Filtros
-  uint8  :filter_type
-  uint8  :filter_cutoff
-  uint8  :filter_resonance
-
-  # Envelope de Amplitude
-  uint8  :amp_attack
-  uint8  :amp_decay
-  uint8  :amp_sustain
-  uint8  :amp_release
-
-  # Envelope de Pitch
-  uint8  :pitch_attack
-  uint8  :pitch_decay
-  uint8  :pitch_sustain
-  uint8  :pitch_release
-
-  # Modulação
-  uint8  :lfo1_rate
-  uint8  :lfo1_depth
-  uint8  :lfo2_rate
-  uint8  :lfo2_depth
-
-  # Intensidade máxima
-  uint8  :max_intensity
-  # Outros parâmetros identificados
-  array  :additional_parameters, type: :uint8, initial_length: 100
-=end
 
   def to_s
     <<~INFO
       MicroKorg2 Patch - Nome: #{name.strip}
       tempo: #{tempo}
+      #{t1_osc1}
+      #{t1_osc2}
+      #{t1_osc3}
+      #{t1_noise}
+      #{t1_amp_eg}
+    INFO
+  end
+
+  def t1_osc1
+    <<~TXT
       OSC1:
-         wave: #{osc1_wave}
-         level: #{osc1_level}
-         shape: #{osc1_shape}
-         semitones: #{osc1_semitones}
+        wave: #{t1_osc1_wave}
+        level: #{t1_osc1_level}
+        shape: #{t1_osc1_shape}
+        mod: #{t1_osc1_mod}
+        semitones: #{t1_osc1_semitones}
+        finetune: #{t1_osc1_finetune}
+    TXT
+  end
+
+  def t1_osc2
+    <<~TXT
       OSC2:
-         wave: #{osc2_wave}
-         level: #{osc2_level}
-         shape: #{osc2_shape}
-         semitones: #{osc2_semitones}
+        wave: #{t1_osc2_wave}
+        level: #{t1_osc2_level}
+        shape: #{t1_osc2_shape}
+        mod: #{t1_osc2_mod}
+        semitones: #{t1_osc2_semitones}
+        finetune: #{t1_osc2_finetune}
+    TXT
+  end
+
+  def t1_osc3
+    <<~TXT
       OSC3:
-         wave: #{osc3_wave}
-         level: #{osc3_level}
-         shape: #{osc3_shape}
-         semitones: #{osc3_semitones}
+        wave: #{t1_osc3_wave}
+        level: #{t1_osc3_level}
+        shape: #{t1_osc3_shape}
+        mod: #{t1_osc3_mod_type}
+        semitones: #{t1_osc3_semitones}
+        finetune #{t1_osc3_finetune}
+    TXT
+  end
+
+  def t1_noise
+    <<~TXT
       Noise:
-        level: #{noise_level}
+        type: #{t1_noise_type}
+        color: #{t1_noise_color}
+        level: #{t1_noise_level}
+    TXT
+  end
+
+  def t1_amp_eg
+    <<~TXT
       Amp EG:
-         Attk: #{aeg_attk}
-         Dec: #{aeg_decay}
-         Sust: #{aeg_sustain}
-         Rel: #{aeg_rel}
-    INFO
-=begin
-    ID: #{patch_id}, Categoria: #{category}
-    OSC1: Wave #{osc1_wave}, Mod #{osc1_mod}
-    OSC2: Wave #{osc2_wave}, Mod #{osc2_mod}
-    Filtro: Tipo #{filter_type}, Cutoff #{filter_cutoff}, Res #{filter_resonance}
-    Envelope Amplitude: A #{amp_attack}, D #{amp_decay}, S #{amp_sustain}, R #{amp_release}
-    Envelope Pitch: A #{pitch_attack}, D #{pitch_decay}, S #{pitch_sustain}, R #{pitch_release}
-    LFO1: Rate #{lfo1_rate}, Depth #{lfo1_depth}
-    LFO2: Rate #{lfo2_rate}, Depth #{lfo2_depth}
-    Intensidade Máxima: #{max_intensity}
-    INFO
-=end
+        Attk: #{t1_aeg_attack}
+        Dec: #{t1_aeg_decay}
+        Sust: #{t1_aeg_sustain}
+        Rel: #{t1_aeg_release}
+        velocity: #{t1_aeg_velocity}
+    TXT
+  end
+
+  def t1_patch1
+    <<~TXT
+      Patch1:
+        SRC1: #{t1_patch1_src1}
+        SRC2: #{t1_patch1_src2}
+        DST: #{t1_patch1_dst}
+        Intensity: #{t1_patch1_intensity}
+        Connected: #{t1_patch1_connected == 1 ? 'ON' : 'Off'}
+    TXT
   end
 end
 
