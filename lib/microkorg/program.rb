@@ -1,10 +1,13 @@
 require "bindata"
+require_relative 'osc'
+require_relative 'patch'
+require_relative 'envelope'
 
 class Microkorg::Program < BinData::Record
   endian :little
 
   # Offset 00
-  # Cabeçalho
+  # Header
   string :header, length: 8
   int16 :offset_00_5
   int16 :offset_00_6
@@ -17,10 +20,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_10_1
   int16 :offset_10_2
 
-  string :name, length: 20
+  string :name, length: 20, trim_padding: true
 
   int16 :timbre_mode_a
-  int16 :octave_shift
+  int16 :octave_shift, initial_value: 0
   string :filler2, length: 4
 
   # Offset 30
@@ -70,7 +73,7 @@ class Microkorg::Program < BinData::Record
   # Offset 80
   int16 :poly_mono
   int16 :offset_80_1
-  int16 :unison
+  int16 :unison_voices # if voices > 0, sum 1
   int16 :unison_detune
   int16 :unison_spread
   int16 :unison_x
@@ -87,42 +90,19 @@ class Microkorg::Program < BinData::Record
   # ----------------------------------
   # Start OSC 1
   # Offset a0
-  int16 :t1_osc1_wave
-  int16 :t1_osc1_shape
-  int16 :t1_osc1_mod
-  int16 :t1_osc1_sample
-  int16 :t1_osc1_level
-  int16 :t1_osc1_unknow2
-  int16 :t1_osc1_semitones
-  int16 :t1_osc1_finetune
+  osc :t1_osc1
+  int16 :noise_kbd_osc1
+  string :filler_osc1, length: 6
 
-  string :t1_offset_b0, length: 8
-  # -------------------------------
-  # Start OSC 2
-  int16 :t1_osc2_wave
-  int16 :t1_osc2_shape
-  int16 :t1_osc2_mod
-  int16 :t1_osc2_sample
-  int16 :t1_osc2_level
-  int16 :t1_osc2_unknow2
-  int16 :t1_osc2_semitones
-  int16 :t1_osc2_finetune
+  osc :t1_osc2
+  int16 :noise_kbd_osc2
+  string :filler_osc2, length: 6
 
-  string :t1_offset_c0, length: 8
-
-  # ------------------------------------
-  # Start OSC 3
-  int16 :t1_osc3_wave
-  int16 :t1_osc3_shape
-  int16 :t1_osc3_mod_type
-  int16 :t1_osc3_sample
-  int16 :t1_osc3_level
-  int16 :t1_osc3_unknow2
-  int16 :t1_osc3_semitones
-  int16 :t1_osc3_finetune
+  osc :t1_osc3
+  int16 :noise_kbd_osc3
+  string :filler_osc3, length: 6
 
   # offset e0
-  string :offset_e0_1, length: 8
   int16 :t1_noise_type
   int16 :t1_noise_color
   int16 :t1_noise_level
@@ -139,19 +119,15 @@ class Microkorg::Program < BinData::Record
   # Offset 100
   int16 :t1_filter_drive # ?
   string :t1_offset_100, length: 6
-  int16 :t1_filter_attack
-  int16 :t1_filter_decay
-  int16 :t1_filter_sustain
-  int16 :t1_filter_release
+
+  envelope :t1_filter_eg
 
   # offset 110
   int16 :t1_filter_intensity
   int16 :offset_110_2
   string :offset_110, length: 4
-  int16 :t1_aeg_attack
-  int16 :t1_aeg_decay
-  int16 :t1_aeg_sustain
-  int16 :t1_aeg_release
+
+  envelope :t1_amp_eg
 
   # offset 120
   int16 :offset_120_1
@@ -185,54 +161,16 @@ class Microkorg::Program < BinData::Record
 
   # Offset 150
   string :offset_150, length: 8
-  int16 :t1_patch1_connected
-  int16 :t1_patch1_src1
-  int16 :t1_patch1_src2
-  int16 :t1_patch1_dst
 
-  # offset 160
-  int16 :t1_patch1_intensity
-  string :filler_160, length: 6
-  int16 :t1_patch2_connected
-  int16 :t1_patch2_src1
-  int16 :t1_patch2_src2
-  int16 :t1_patch2_dst
-
-  # offset 170
-  int16 :t1_patch2_intensity
-  string :offset_170_1, length: 6
-  int16 :t1_patch3_connected
-  int16 :t1_patch3_src1
-  int16 :t1_patch3_src2
-  int16 :t1_patch3_dst
-
-  # offset 180
-  int16 :t1_patch3_intensity
-  string :offset_180_1, length: 6
-  int16 :t1_patch4_connected
-  int16 :t1_patch4_src1
-  int16 :t1_patch4_src2
-  int16 :t1_patch4_dst
-
-  # offset 190
-  int16 :t1_patch4_intensity
-  string :offset_190_1, length: 6
-  int16 :t1_patch5_connected
-  int16 :t1_patch5_src1
-  int16 :t1_patch5_src2
-  int16 :t1_patch5_dst
-
-  # offset 1a0
-  int16 :t1_patch5_intensity
-  string :offset_1a0_1, length: 6
-  int16 :t1_patch6_connected
-  int16 :t1_patch6_src1
-  int16 :t1_patch6_src2
-  int16 :t1_patch6_dst
+  patch :t1_patch1
+  patch :t1_patch2
+  patch :t1_patch3
+  patch :t1_patch4
+  patch :t1_patch5
+  patch :t1_patch6
 
   # offset 1b0
-  int16 :t1_patch6_intensity
-  string :offset_1b0_1, length: 6
+  # string :offset_1b0_1, length: 6
   string :offset_1b0_2, length: 8
 
   string :offset_1c0, length: 16
@@ -270,35 +208,13 @@ class Microkorg::Program < BinData::Record
   string :offset_1f0, length: 6
 
   # offset 200
-  # OSC 1
-  int16 :t2_osc1_wave
-  int16 :t2_osc1_shape
-  int16 :t2_osc1_mod
-  int16 :t2_osc1_sample
-  int16 :t2_osc1_level
-  int16 :t2_osc1_unknow2
-  int16 :t2_osc1_semitones
-  int16 :t2_osc1_finetune
+  osc :t2_osc1
 
   # offset 210
-  int16 :t2_osc2_wave
-  int16 :t2_osc2_shape
-  int16 :t2_osc2_mod
-  int16 :t2_osc2_sample
-  int16 :t2_osc2_level
-  int16 :t2_osc2_unknow2
-  int16 :t2_osc2_semitones
-  int16 :t2_osc2_finetune
+  osc :t2_osc2
 
   # offset 220
-  int16 :t2_osc3_wave
-  int16 :t2_osc3_shape
-  int16 :t2_osc3_mod_type
-  int16 :t2_osc3_sample
-  int16 :t2_osc3_level
-  int16 :t2_osc3_unknow2
-  int16 :t2_osc3_semitones
-  int16 :t2_osc3_finetune
+  osc :t2_osc3
 
   # offset 230
   string :offset_230_1, length: 8
@@ -317,18 +233,14 @@ class Microkorg::Program < BinData::Record
   # offset 250
   int16 :t2_filter_drive
   string :offset_250_1, length: 6
-  int16 :t2_filter_attack
-  int16 :t2_filter_decay
-  int16 :t2_filter_sustain
-  int16 :t2_filter_release
+
+  envelope :t2_filter_eg
 
   # offset 260
   int16 :t2_filter_intensity
   string :offset_260, length: 6
-  int16 :t2_aeg_attack
-  int16 :t2_aeg_decay
-  int16 :t2_aeg_sustain
-  int16 :t2_aeg_release
+
+  envelope :t2_amp_eg
 
   # offset 270
   int16 :offset_270_1
@@ -367,54 +279,15 @@ class Microkorg::Program < BinData::Record
   int16 :offset_2a0_2
   int16 :offset_2a0_3
   int16 :offset_2a0_4
-  int16 :t2_patch1_connected
-  int16 :t2_patch1_src1
-  int16 :t2_patch1_src2
-  int16 :t2_patch1_dst
 
-  # string :offset_2b0, length: 16
-  int16 :t2_patch1_intensity
-  string :filler_2b0, length: 6
-  int16 :t2_patch2_connected
-  int16 :t2_patch2_src1
-  int16 :t2_patch2_src2
-  int16 :t2_patch2_dst
-
-  # string :offset_2c0, length: 16
-  int16 :t2_patch2_intensity
-  string :filler_2c0, length: 6
-  int16 :t2_patch3_connected
-  int16 :t2_patch3_src1
-  int16 :t2_patch3_src2
-  int16 :t2_patch3_dst
-
-  # string :offset_2d0, length: 16
-  int16 :t2_patch3_intensity
-  string :filler_2d0, length: 6
-  int16 :t2_patch4_connected
-  int16 :t2_patch4_src1
-  int16 :t2_patch4_src2
-  int16 :t2_patch4_dst
-
-  # string :offset_2e0, length: 16
-  int16 :t2_patch4_intensity
-  string :filler_2e0, length: 6
-  int16 :t2_patch5_connected
-  int16 :t2_patch5_src1
-  int16 :t2_patch5_src2
-  int16 :t2_patch5_dst
-
-  # string :offset_2f0, length: 16
-  int16 :t2_patch5_intensity
-  string :filler_2f0, length: 6
-  int16 :t2_patch6_connected
-  int16 :t2_patch6_src1
-  int16 :t2_patch6_src2
-  int16 :t2_patch6_dst
+  patch :t2_patch1
+  patch :t2_patch2
+  patch :t2_patch3
+  patch :t2_patch4
+  patch :t2_patch5
+  patch :t2_patch6
 
   # offset 300
-  int16 :t2_patch6_intensity
-  string :offset_300_2, length: 6
   int16 :offset_300_5
   string :offset_300_3, length: 6
 
@@ -425,8 +298,8 @@ class Microkorg::Program < BinData::Record
 
   # offset 330
   string :offset_330, length: 8
-  int16 :tempo
-  int16 :arp_on
+  int16 :tempo, initial_value: 120
+  int16 :arp_on, initial_value: 0
   int16 :arp_offset_330_7 # target batch on ?
   int16 :arp_offset_330_8
 
@@ -642,8 +515,8 @@ class Microkorg::Program < BinData::Record
   int16 :delay_low_cut
   int16 :offset_4b0_3
   int16 :delay_offset
-  int16 :delay_feedback
-  int16 :delay_dry_wet
+  int16 :delay_feedback, initial_value: 64
+  int16 :delay_dry_wet, initial_value: 50
   int16 :offset_4b0_7
   int16 :offset_4b0_8
 
@@ -663,8 +536,8 @@ class Microkorg::Program < BinData::Record
   int16 :reverb_damp
   int16 :reverb_pre_delay
   int16 :reverb_width
-  int16 :reverb_size
-  int16 :reverb_dry_wet
+  int16 :reverb_size,    initial_value: 127
+  int16 :reverb_dry_wet, initial_value: 50
   int16 :offset_4f0_7
   int16 :offset_4f0_8
 
@@ -690,78 +563,8 @@ class Microkorg::Program < BinData::Record
     <<~INFO
       MicroKorg2 Patch - Nome: #{name.strip}
       tempo: #{tempo}
-      #{t1_osc1}
-      #{t1_osc2}
-      #{t1_osc3}
-      #{t1_noise}
-      #{t1_amp_eg}
     INFO
   end
 
-  def t1_osc1
-    <<~TXT
-      OSC1:
-        wave: #{t1_osc1_wave}
-        level: #{t1_osc1_level}
-        shape: #{t1_osc1_shape}
-        mod: #{t1_osc1_mod}
-        semitones: #{t1_osc1_semitones}
-        finetune: #{t1_osc1_finetune}
-    TXT
-  end
-
-  def t1_osc2
-    <<~TXT
-      OSC2:
-        wave: #{t1_osc2_wave}
-        level: #{t1_osc2_level}
-        shape: #{t1_osc2_shape}
-        mod: #{t1_osc2_mod}
-        semitones: #{t1_osc2_semitones}
-        finetune: #{t1_osc2_finetune}
-    TXT
-  end
-
-  def t1_osc3
-    <<~TXT
-      OSC3:
-        wave: #{t1_osc3_wave}
-        level: #{t1_osc3_level}
-        shape: #{t1_osc3_shape}
-        mod: #{t1_osc3_mod_type}
-        semitones: #{t1_osc3_semitones}
-        finetune #{t1_osc3_finetune}
-    TXT
-  end
-
-  def t1_noise
-    <<~TXT
-      Noise:
-        type: #{t1_noise_type}
-        color: #{t1_noise_color}
-        level: #{t1_noise_level}
-    TXT
-  end
-
-  def t1_amp_eg
-    <<~TXT
-      Amp EG:
-        Attk: #{t1_aeg_attack}
-        Dec: #{t1_aeg_decay}
-        Sust: #{t1_aeg_sustain}
-        Rel: #{t1_aeg_release}
-        velocity: #{t1_aeg_velocity}
-    TXT
-  end
-
-  def t1_patch1
-    <<~TXT
-      Patch1:
-        SRC1: #{t1_patch1_src1}
-        SRC2: #{t1_patch1_src2}
-        DST: #{t1_patch1_dst}
-        Intensity: #{t1_patch1_intensity}
-        Connected: #{(t1_patch1_connected == 1) ? "ON" : "Off"}
-    TXT
-  end
 end
+
