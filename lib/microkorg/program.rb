@@ -92,15 +92,15 @@ class Microkorg::Program < BinData::Record
   # Offset a0
   osc :t1_osc1
   int16 :noise_kbd_osc1
-  string :filler_osc1, length: 6
+  string :filler_osc1, length: 6 # offset b0
 
   osc :t1_osc2
   int16 :noise_kbd_osc2
-  string :filler_osc2, length: 6
+  string :filler_osc2, length: 6 # offset c0
 
   osc :t1_osc3
   int16 :noise_kbd_osc3
-  string :filler_osc3, length: 6
+  string :filler_osc3, length: 6 # offset d0
 
   # offset e0
   int16 :t1_noise_type
