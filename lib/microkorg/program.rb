@@ -2,6 +2,7 @@ require "bindata"
 require_relative "oscilator"
 require_relative "patch"
 require_relative "envelope"
+require_relative "lfo"
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -76,7 +77,7 @@ class Microkorg::Program < BinData::Record
   int16 :unison_voices # if voices > 0, sum 1
   int16 :unison_detune
   int16 :unison_spread
-  int16 :unison_x
+  int16 :unison_x # if osc3 node type is disabled, this is affected (0)
   string :filler_80_3, length: 4
 
   # offset 90
@@ -133,27 +134,14 @@ class Microkorg::Program < BinData::Record
   int16 :offset_120_1
   int16 :t1_aeg_velocity
   string :offset_120, length: 4
-  int16 :t1_lfo1_wave
-  int16 :t1_lfo1_mode
-  int16 :t1_lfo1_freq
-  int16 :t1_lfo1_unknow
+
+  lfo :t1_lfo1
 
   # offset 130
-  int16 :offset_130_1
-  int16 :offset_130_2
-  int16 :offset_130_3
-  int16 :t1_lfo1_smooth
   string :offset_130, length: 8
 
   # offset 140
-  int16 :offset_140_1
-  int16 :offset_140_2
-  int16 :offset_140_3
-  int16 :offset_140_4
-  int16 :offset_140_5
-  int16 :offset_140_6
-  int16 :t1_lfo2_delay
-  int16 :offset_140_8
+  lfo :t1_lfo2
 
   ###########
   # Patches
@@ -162,6 +150,7 @@ class Microkorg::Program < BinData::Record
   # Offset 150
   string :offset_150, length: 8
 
+  # array :t1_patch, type: :patch, initial_length: 6
   patch :t1_patch1
   patch :t1_patch2
   patch :t1_patch3
@@ -246,21 +235,11 @@ class Microkorg::Program < BinData::Record
   int16 :offset_270_1
   int16 :t2_aeg_velocity
   string :offset_270, length: 4
-  int16 :t2_lfo1_wave
-  int16 :t2_lfo1_mode
-  int16 :t2_lfo1_freq
-  int16 :t2_lfo1_unknow
 
+  lfo :t2_lfo1
   # offset 280
-  int16 :t2_lfo1_unknow1
-  int16 :t2_lfo1_unknow2
-  int16 :t2_lfo1_unknow3
-  int16 :t2_lfo1_smooth
-  # string :offset_280_2, length: 8
-  int16 :offset_280_5
-  int16 :offset_280_6
-  int16 :offset_280_7
-  int16 :offset_280_8
+  
+  string :offset_280_2, length: 8
 
   # offset 290
   int16 :offset_290_1
