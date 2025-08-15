@@ -1,5 +1,5 @@
 require "bindata"
-require_relative "osc"
+require_relative "oscilator"
 require_relative "patch"
 require_relative "envelope"
 
