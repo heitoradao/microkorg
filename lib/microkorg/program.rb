@@ -90,15 +90,15 @@ class Microkorg::Program < BinData::Record
   # ----------------------------------
   # Start OSC 1
   # Offset a0
-  osc :t1_osc1
+  oscilator :t1_osc1
   int16 :noise_kbd_osc1
   string :filler_osc1, length: 6 # offset b0
 
-  osc :t1_osc2
+  oscilator :t1_osc2
   int16 :noise_kbd_osc2
   string :filler_osc2, length: 6 # offset c0
 
-  osc :t1_osc3
+  oscilator :t1_osc3
   int16 :noise_kbd_osc3
   string :filler_osc3, length: 6 # offset d0
 
@@ -208,13 +208,13 @@ class Microkorg::Program < BinData::Record
   string :offset_1f0, length: 6
 
   # offset 200
-  osc :t2_osc1
+  oscilator :t2_osc1
 
   # offset 210
-  osc :t2_osc2
+  oscilator :t2_osc2
 
   # offset 220
-  osc :t2_osc3
+  oscilator :t2_osc3
 
   # offset 230
   string :offset_230_1, length: 8
