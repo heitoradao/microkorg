@@ -8,6 +8,7 @@ require_relative "hardtune"
 require_relative "vocoder"
 require_relative "noise"
 require_relative "arpegiator"
+require_relative "harmonizer"
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -327,15 +328,9 @@ class Microkorg::Program < BinData::Record
   int16 :offset_3f0_2
   int16 :offset_3f0_3
   int16 :offset_3f0_4
-  int16 :harmonizer_on
-  int16 :harmony_number
-  int16 :harmonies_level
-  int16 :harmonizer_stereo
-
+  
+  harmonizer :harmonizer
   # string :offset_400, length: 16
-  int16 :harmonizer_formant
-  int16 :harmonizer_detune
-  int16 :harmonizer_delay
   int16 :offset_400_4
   int16 :offset_400_5
   int16 :offset_400_6
