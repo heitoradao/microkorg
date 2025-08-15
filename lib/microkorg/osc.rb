@@ -10,8 +10,5 @@ class Osc < BinData::Record
   int16 :unknow
   int16 :semitones
   int16 :finetune
-  int16 :noise_kbd
-
-  string :filler, length: 6
 end
 
