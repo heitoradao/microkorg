@@ -9,6 +9,8 @@ require_relative "vocoder"
 require_relative "noise"
 require_relative "arpegiator"
 require_relative "harmonizer"
+require_relative "knob"
+
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -38,30 +40,20 @@ class Microkorg::Program < BinData::Record
   int16 :genre
   int16 :offset_30_5
   int16 :offset_30_6
-  int16 :knob1_assign
-  int16 :offset_30_7
-  int16 :offset_30_8
+  
+  knob :knob1
 
-  # string :offset_40, length: 16
   # offset 40
   int16 :offset_40_1
-  int16 :knob2_assign
-  int16 :offset_40_3
-  int16 :offset_40_4
+  knob :knob2
   int16 :offset_40_5
-  int16 :knob3_assign
-  int16 :offset_40_7
-  int16 :offset_40_8
+  knob :knob3
 
   # offset 50
   int16 :offset_50_1
-  int16 :knob4_assign
-  int16 :offset_50_3
-  int16 :offset_50_4
+  knob :knob4
   int16 :offset_50_5
-  int16 :knob5_assign
-  int16 :offset_50_7
-  int16 :offset_50_8
+  knob :knob5
 
   string :offset_60, length: 16
 
