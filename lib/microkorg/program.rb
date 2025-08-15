@@ -1,7 +1,7 @@
 require "bindata"
-require_relative 'osc'
-require_relative 'patch'
-require_relative 'envelope'
+require_relative "osc"
+require_relative "patch"
+require_relative "envelope"
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -536,7 +536,7 @@ class Microkorg::Program < BinData::Record
   int16 :reverb_damp
   int16 :reverb_pre_delay
   int16 :reverb_width
-  int16 :reverb_size,    initial_value: 127
+  int16 :reverb_size, initial_value: 127
   int16 :reverb_dry_wet, initial_value: 50
   int16 :offset_4f0_7
   int16 :offset_4f0_8
@@ -565,6 +565,4 @@ class Microkorg::Program < BinData::Record
       tempo: #{tempo}
     INFO
   end
-
 end
-

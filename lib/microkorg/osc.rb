@@ -1,4 +1,3 @@
-
 class Osc < BinData::Record
   endian :little
 
@@ -11,4 +10,3 @@ class Osc < BinData::Record
   int16 :semitones
   int16 :finetune
 end
-

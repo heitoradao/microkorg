@@ -1,4 +1,3 @@
-
 class Patch < BinData::Record
   endian :little
 
@@ -10,4 +9,3 @@ class Patch < BinData::Record
 
   string :filler, length: 6
 end
-
