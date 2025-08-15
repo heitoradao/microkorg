@@ -1,4 +1,4 @@
-class Osc < BinData::Record
+class Oscilator < BinData::Record
   endian :little
 
   int16 :wave
