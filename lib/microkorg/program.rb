@@ -1,7 +1,21 @@
 require "bindata"
-require_relative 'osc'
-require_relative 'patch'
-require_relative 'envelope'
+require_relative "oscilator"
+require_relative "oscilator_expanded"
+require_relative "patch"
+require_relative "envelope"
+require_relative "lfo"
+require_relative "hardtune"
+require_relative "vocoder"
+require_relative "noise"
+require_relative "arpegiator"
+require_relative "harmonizer"
+require_relative "knob"
+require_relative "reverb"
+require_relative "equalizer"
+require_relative "filter"
+require_relative "delay"
+require_relative "mod"
+require_relative "portamento"
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -13,10 +27,8 @@ class Microkorg::Program < BinData::Record
   int16 :offset_00_6
   int16 :offset_00_7
   int16 :offset_00_8
-  # string :filler_00, length: 8
 
   # Offset 10
-  # string :filler_10_1, length: 4
   int16 :offset_10_1
   int16 :offset_10_2
 
@@ -31,30 +43,22 @@ class Microkorg::Program < BinData::Record
   int16 :genre
   int16 :offset_30_5
   int16 :offset_30_6
-  int16 :knob1_assign
-  int16 :offset_30_7
-  int16 :offset_30_8
 
-  # string :offset_40, length: 16
+  knob :knob1
   # offset 40
   int16 :offset_40_1
-  int16 :knob2_assign
-  int16 :offset_40_3
-  int16 :offset_40_4
-  int16 :offset_40_5
-  int16 :knob3_assign
-  int16 :offset_40_7
-  int16 :offset_40_8
 
+  knob :knob2
+  int16 :offset_40_5
+
+  knob :knob3
   # offset 50
   int16 :offset_50_1
-  int16 :knob4_assign
-  int16 :offset_50_3
-  int16 :offset_50_4
+
+  knob :knob4
   int16 :offset_50_5
-  int16 :knob5_assign
-  int16 :offset_50_7
-  int16 :offset_50_8
+
+  knob :knob5
 
   string :offset_60, length: 16
 
@@ -76,48 +80,28 @@ class Microkorg::Program < BinData::Record
   int16 :unison_voices # if voices > 0, sum 1
   int16 :unison_detune
   int16 :unison_spread
-  int16 :unison_x
+  int16 :unison_x # if osc3 node type is disabled, this is affected (0)
   string :filler_80_3, length: 4
 
   # offset 90
-  int16 :t1_porta_time
-  int16 :t1_porta_mode
-  int16 :t1_transpose
-  int16 :t1_finetune
-  int16 :t1_pb_range
+  portamento :t1_porta
+
   string :offset_90, length: 6
 
   # ----------------------------------
   # Start OSC 1
   # Offset a0
-  osc :t1_osc1
-  int16 :noise_kbd_osc1
-  string :filler_osc1, length: 6 # offset b0
-
-  osc :t1_osc2
-  int16 :noise_kbd_osc2
-  string :filler_osc2, length: 6 # offset c0
-
-  osc :t1_osc3
-  int16 :noise_kbd_osc3
-  string :filler_osc3, length: 6 # offset d0
+  array :t1_osc, type: :oscilator_expanded, initial_length: 3
 
   # offset e0
-  int16 :t1_noise_type
-  int16 :t1_noise_color
-  int16 :t1_noise_level
-  int16 :t1_noise_unknow
+  noise :t1_noise
 
   # Offset F0
   string :offset_f0, length: 8
-  int16 :t1_filter_type
-  int16 :t1_filter_cutoff
-  int16 :t1_filter_resonance
-  int16 :t1_filter_keytrack # -63 aparece como -200 no teclado
-  # ---------
-
+  
+  filter :t1_filter
   # Offset 100
-  int16 :t1_filter_drive # ?
+=begin
   string :t1_offset_100, length: 6
 
   envelope :t1_filter_eg
@@ -126,34 +110,21 @@ class Microkorg::Program < BinData::Record
   int16 :t1_filter_intensity
   int16 :offset_110_2
   string :offset_110, length: 4
-
+=end
   envelope :t1_amp_eg
 
   # offset 120
   int16 :offset_120_1
   int16 :t1_aeg_velocity
   string :offset_120, length: 4
-  int16 :t1_lfo1_wave
-  int16 :t1_lfo1_mode
-  int16 :t1_lfo1_freq
-  int16 :t1_lfo1_unknow
+
+  lfo :t1_lfo1
 
   # offset 130
-  int16 :offset_130_1
-  int16 :offset_130_2
-  int16 :offset_130_3
-  int16 :t1_lfo1_smooth
   string :offset_130, length: 8
 
   # offset 140
-  int16 :offset_140_1
-  int16 :offset_140_2
-  int16 :offset_140_3
-  int16 :offset_140_4
-  int16 :offset_140_5
-  int16 :offset_140_6
-  int16 :t1_lfo2_delay
-  int16 :offset_140_8
+  lfo :t1_lfo2
 
   ###########
   # Patches
@@ -162,17 +133,10 @@ class Microkorg::Program < BinData::Record
   # Offset 150
   string :offset_150, length: 8
 
-  patch :t1_patch1
-  patch :t1_patch2
-  patch :t1_patch3
-  patch :t1_patch4
-  patch :t1_patch5
-  patch :t1_patch6
+  array :t1_patch, type: :patch, initial_length: 6
 
   # offset 1b0
-  # string :offset_1b0_1, length: 6
   string :offset_1b0_2, length: 8
-
   string :offset_1c0, length: 16
 
   #############
@@ -200,38 +164,21 @@ class Microkorg::Program < BinData::Record
   int16 :offset_1e0_8
 
   # offset 1f0
-  int16 :t2_porta_time
-  int16 :t2_porta_mode
-  int16 :t2_transpose
-  int16 :t2_finetune
-  int16 :t2_pb_range
+  portamento :t2_porta
   string :offset_1f0, length: 6
 
   # offset 200
-  osc :t2_osc1
-
-  # offset 210
-  osc :t2_osc2
-
-  # offset 220
-  osc :t2_osc3
+  array :t2_osc, type: :oscilator, initial_length: 3
 
   # offset 230
   string :offset_230_1, length: 8
-  int16 :t2_noise_type
-  int16 :t2_noise_color
-  int16 :t2_noise_level
-  int16 :t2_noise_unknow
+  noise :t2_noise
 
   # offset 240
   string :offset_240, length: 8
-  int16 :t2_filter_type
-  int16 :t2_filter_cutoff
-  int16 :t2_filter_resonance
-  int16 :t2_filter_keytrack
-
-  # offset 250
-  int16 :t2_filter_drive
+ 
+  filter :t2_filter
+=begin
   string :offset_250_1, length: 6
 
   envelope :t2_filter_eg
@@ -239,28 +186,17 @@ class Microkorg::Program < BinData::Record
   # offset 260
   int16 :t2_filter_intensity
   string :offset_260, length: 6
-
+=end
   envelope :t2_amp_eg
 
   # offset 270
   int16 :offset_270_1
   int16 :t2_aeg_velocity
   string :offset_270, length: 4
-  int16 :t2_lfo1_wave
-  int16 :t2_lfo1_mode
-  int16 :t2_lfo1_freq
-  int16 :t2_lfo1_unknow
 
+  lfo :t2_lfo1
   # offset 280
-  int16 :t2_lfo1_unknow1
-  int16 :t2_lfo1_unknow2
-  int16 :t2_lfo1_unknow3
-  int16 :t2_lfo1_smooth
-  # string :offset_280_2, length: 8
-  int16 :offset_280_5
-  int16 :offset_280_6
-  int16 :offset_280_7
-  int16 :offset_280_8
+  string :offset_280_2, length: 8
 
   # offset 290
   int16 :offset_290_1
@@ -269,9 +205,6 @@ class Microkorg::Program < BinData::Record
   int16 :offset_290_4
   string :offset_290, length: 8
 
-  ###########
-  # Patches
-  ###########
 
   # offset 2a0
   # string :offset_2a0, length: 8
@@ -280,12 +213,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_2a0_3
   int16 :offset_2a0_4
 
-  patch :t2_patch1
-  patch :t2_patch2
-  patch :t2_patch3
-  patch :t2_patch4
-  patch :t2_patch5
-  patch :t2_patch6
+  ###########
+  # Patches
+  ###########
+  array :t2_patch, type: :patch, initial_length: 6
 
   # offset 300
   int16 :offset_300_5
@@ -299,36 +230,10 @@ class Microkorg::Program < BinData::Record
   # offset 330
   string :offset_330, length: 8
   int16 :tempo, initial_value: 120
-  int16 :arp_on, initial_value: 0
-  int16 :arp_offset_330_7 # target batch on ?
-  int16 :arp_offset_330_8
 
-  # offset 340
-  int16 :arp_unknow1
-  int16 :arp_octave
-  int16 :arp_unknow3 # target_batch_on ?
-  int16 :arp_gate_time
-  int16 :arp_last_step
-  int16 :arp_swing
-  int16 :arp_unknow7
-  int16 :arp_unknow8
-  # string :offset_340, length: 14
-
-  # string :offset_350, length: 16
-  int16 :offset_350_1
-  int16 :offset_350_2
-  int16 :offset_350_3
-  int16 :offset_350_4
-  int16 :arp_track1
-  int16 :arp_track2
-  int16 :arp_track3
-  int16 :arp_track4
+  arpegiator :arpegiator
 
   # string :offset_360, length: 16
-  int16 :arp_track5
-  int16 :arp_track6
-  int16 :arp_track7
-  int16 :arp_track8
   int16 :offset_360_5
   int16 :offset_360_6
   int16 :offset_360_7
@@ -336,63 +241,12 @@ class Microkorg::Program < BinData::Record
 
   # offset 370
   string :offset_370, length: 8
-  int16 :vocoder_on
-  int16 :vocoder_mic_direct
-  int16 :vocoder_synth_dry_wet
-  int16 :vocoder_formant
+  vocoder :vocoder
 
-  # offset 380
-  int16 :vocoder_resonance
-  int16 :vocoder_env_follower_sens
-  int16 :offset_380_3
-  int16 :offset_380_4
-  int16 :band1_level
-  int16 :band2_level
-  int16 :band3_level
-  int16 :band4_level
-
-  # offset 390
-  int16 :band5_level
-  int16 :band6_level
-  int16 :band7_level
-  int16 :band8_level
-  int16 :band9_level
-  int16 :band10_level
-  int16 :band11_level
-  int16 :band12_level
-  # string :offset_390, length: 16
-
-  # offset 3a0
-  int16 :band13_level
-  int16 :band14_level
-  int16 :band15_level
-  int16 :band16_level
-  int16 :band1_pan
-  int16 :band2_pan
-  int16 :band3_pan
-  int16 :band4_pan
-
-  # offset 3b0
-  int16 :band5_pan
-  int16 :band6_pan
-  int16 :band7_pan
-  int16 :band8_pan
-  int16 :band9_pan
-  int16 :band10_pan
-  int16 :band11_pan
-  int16 :band12_pan
-  # string :offset_3b0, length: 16
-
-  # offset 3c0
-  int16 :band13_pan
-  int16 :band14_pan
-  int16 :band15_pan
-  int16 :band16_pan
   int16 :offset_3c0_5
   int16 :offset_3c0_6
   int16 :offset_3c0_7
   int16 :offset_3c0_8
-  # string :offset_3c0, length: 16
 
   string :offset_3d0, length: 16
 
@@ -402,26 +256,15 @@ class Microkorg::Program < BinData::Record
   int16 :offset_3e0_3
   int16 :offset_3e0_4
 
-  int16 :hardtune_on
-  int16 :hardtune_intensity
-  int16 :hardtune_speed
-  int16 :hardtune_formant
+  hardtune :hardtune
 
   # offset 3f0
-  # string :offset_3f0, length: 16
   int16 :offset_3f0_1
   int16 :offset_3f0_2
   int16 :offset_3f0_3
   int16 :offset_3f0_4
-  int16 :harmonizer_on
-  int16 :harmony_number
-  int16 :harmonies_level
-  int16 :harmonizer_stereo
 
-  # string :offset_400, length: 16
-  int16 :harmonizer_formant
-  int16 :harmonizer_detune
-  int16 :harmonizer_delay
+  harmonizer :harmonizer
   int16 :offset_400_4
   int16 :offset_400_5
   int16 :offset_400_6
@@ -429,17 +272,13 @@ class Microkorg::Program < BinData::Record
   int16 :offset_400_8
 
   string :offset_410, length: 16
-  # string :offset_420, length: 16
-  int16 :offset_420_1
-  int16 :offset_420_2
-  int16 :offset_420_3
-  int16 :offset_420_4
-  int16 :offset_420_5
-  int16 :offset_420_6
-  int16 :offset_420_7
-  int16 :offset_420_8
 
-  # string :offset_430, length: 16
+  string :offset_420, length: 12
+  int16 :offset_420_7 # pitch 1 ?
+  int16 :offset_420_8 # pitch 2 ?
+
+  string :offset_430, length: 16
+=begin
   int16 :offset_430_1
   int16 :offset_430_2
   int16 :offset_430_3
@@ -448,8 +287,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_430_6
   int16 :offset_430_7 # harmonizer pitch ?
   int16 :offset_430_8
+=end
 
-  # string :offset_440, length: 16
+  string :offset_440, length: 16
+=begin
   int16 :offset_440_1
   int16 :offset_440_2
   int16 :offset_440_3
@@ -458,39 +299,22 @@ class Microkorg::Program < BinData::Record
   int16 :offset_440_6
   int16 :offset_440_7
   int16 :offset_440_8
+=end
 
-  # string :offset_450, length: 16
+  #string :offset_450, length: 12
+#=begin
   int16 :offset_450_1
   int16 :offset_450_2
   int16 :offset_450_3
   int16 :offset_450_4
   int16 :offset_450_5
   int16 :offset_450_6
-  int16 :mod_on
-  int16 :mod_type
+#=end
 
-  # offset 460
-  # string :offset_460, length: 16
-  int16 :offset_460_1
-  int16 :offset_460_2
-  int16 :offset_460_3
-  int16 :offset_460_4
-  int16 :offset_460_5
-  int16 :offset_460_6 # mod_sub_type
-  int16 :mod_speed
-  int16 :mod_detpth
-
-  # offset 470
-  int16 :offset_470_1
-  int16 :mod_low_cut
-  int16 :mod_manual
-  int16 :mod_width
-  int16 :offset_470_5
-  int16 :mod_dry_wet
+  mod :mod
+  # offset 47c
   int16 :offset_470_7
   int16 :offset_470_8
-  # string :offset_470_2, length: 6
-  # string :offset_470_3, length: 8
 
   string :offset_480, length: 16
 
@@ -502,6 +326,13 @@ class Microkorg::Program < BinData::Record
   int16 :offset_490_4
   int16 :offset_490_5
   int16 :offset_490_6
+
+
+
+
+  delay :delay
+
+=begin
   int16 :delay_on
   int16 :delay_type
 
@@ -517,27 +348,16 @@ class Microkorg::Program < BinData::Record
   int16 :delay_offset
   int16 :delay_feedback, initial_value: 64
   int16 :delay_dry_wet, initial_value: 50
+=end
+
   int16 :offset_4b0_7
   int16 :offset_4b0_8
 
   string :offset_4c0, length: 16
   string :offset_4d0, length: 12
-  int16 :reverb_on
-  int16 :reverb_type
 
-  # offset 4e0
-  string :offset_4e0, length: 12
-  int16 :offset_4e0_7
-  int16 :reverb_time
+  reverb :reverb
 
-  # offset 4f0
-  # string :offset_4f0, length: 16
-  int16 :reverb_depth
-  int16 :reverb_damp
-  int16 :reverb_pre_delay
-  int16 :reverb_width
-  int16 :reverb_size,    initial_value: 127
-  int16 :reverb_dry_wet, initial_value: 50
   int16 :offset_4f0_7
   int16 :offset_4f0_8
 
@@ -547,14 +367,10 @@ class Microkorg::Program < BinData::Record
   # offset 520
   int16 :offset_520_1
   string :offset_520, length: 10
-  int16 :eq_on
-  int16 :offset_520_8_low_freq # eq_low_freq ?
 
-  # offset 530
-  int16 :offset_530_high_freq # eq_high_freq ?
-  int16 :eq_low_gain
-  int16 :eq_high_gain
-  int16 :eq_feedback
+  # offset 52e
+  equalizer :eq
+
   string :offset_530, length: 4
   # string :checksum, length: 4
   uint32 :checksum
@@ -565,6 +381,4 @@ class Microkorg::Program < BinData::Record
       tempo: #{tempo}
     INFO
   end
-
 end
-

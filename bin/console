@@ -3,7 +3,7 @@
 
 require "bundler/setup"
 require "microkorg"
-
+require "tty-markdown"
 
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
@@ -28,6 +28,28 @@ puts filename
 raw_content = File.binread(filename)
 p = Microkorg::Program.read(raw_content)
 
+puts TTY::Markdown.parse <<README
+# Relatório
+
+Lorem ipsum.
+
+```ruby
+puts 'hello'
+```
+
+---
+
+## Tabela
+
+| Título 1 | Título 2 |
+| -------- | -------- |
+| a1       |  b1      |
+| a2       |  b2      |
+
+README
+
 require "irb"
 IRB.start(__FILE__)
+
+File.write('output.mk2prog', p.to_binary_s)
 

@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name = "microkorg"
   spec.version = Microkorg::VERSION
   spec.authors = ["HeitorJr"]
-  #spec.email = [""]
+  # spec.email = [""]
 
   spec.summary = "microkorg patch visualizer tool."
   # spec.description = "TODO: Write a longer description or delete this line."
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Uncomment to register a new dependency of your gem
-  spec.add_dependency "bindata" #, "~> 1.0"
+  spec.add_dependency "bindata" # , "~> 1.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

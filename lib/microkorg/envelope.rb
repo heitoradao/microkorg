@@ -5,6 +5,4 @@ class Envelope < BinData::Record
   int16 :decay
   int16 :sustain
   int16 :release
-
 end
-
