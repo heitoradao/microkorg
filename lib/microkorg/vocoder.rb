@@ -10,7 +10,7 @@ class Vocoder < BinData::Record
 
   int16 :unknow1
   int16 :unknow2
-  
+
   array :band_level, type: :int16, initial_length: 16
   array :band_pan, type: :int16, initial_length: 16
 end

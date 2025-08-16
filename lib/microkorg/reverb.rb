@@ -13,4 +13,3 @@ class Reverb < BinData::Record
   int16 :reverb_size
   int16 :dry_wet
 end
-
