@@ -11,4 +11,17 @@ class LFO < BinData::Record
 
   int16 :delay
   int16 :smooth
+
+  def to_s
+    <<~MARKDOWN
+      | ---- | ----- |
+      | wave | #{wave} |
+      | mode | #{mode} |
+      | freq | #{freq} |
+      | tempo | #{tempo} |
+      | key_sync | #{key_sync} |
+      | delay | #{delay} |
+      | smooth | #{smooth} |
+    MARKDOWN
+  end
 end
