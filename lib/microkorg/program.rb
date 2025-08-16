@@ -14,6 +14,8 @@ require_relative "reverb"
 require_relative "equalizer"
 require_relative "filter"
 require_relative "delay"
+require_relative "mod"
+require_relative "portamento"
 
 class Microkorg::Program < BinData::Record
   endian :little
@@ -82,11 +84,8 @@ class Microkorg::Program < BinData::Record
   string :filler_80_3, length: 4
 
   # offset 90
-  int16 :t1_porta_time
-  int16 :t1_porta_mode
-  int16 :t1_transpose
-  int16 :t1_finetune
-  int16 :t1_pb_range
+  portamento :t1_porta
+
   string :offset_90, length: 6
 
   # ----------------------------------
@@ -102,6 +101,7 @@ class Microkorg::Program < BinData::Record
   
   filter :t1_filter
   # Offset 100
+=begin
   string :t1_offset_100, length: 6
 
   envelope :t1_filter_eg
@@ -110,7 +110,7 @@ class Microkorg::Program < BinData::Record
   int16 :t1_filter_intensity
   int16 :offset_110_2
   string :offset_110, length: 4
-
+=end
   envelope :t1_amp_eg
 
   # offset 120
@@ -164,11 +164,7 @@ class Microkorg::Program < BinData::Record
   int16 :offset_1e0_8
 
   # offset 1f0
-  int16 :t2_porta_time
-  int16 :t2_porta_mode
-  int16 :t2_transpose
-  int16 :t2_finetune
-  int16 :t2_pb_range
+  portamento :t2_porta
   string :offset_1f0, length: 6
 
   # offset 200
@@ -182,6 +178,7 @@ class Microkorg::Program < BinData::Record
   string :offset_240, length: 8
  
   filter :t2_filter
+=begin
   string :offset_250_1, length: 6
 
   envelope :t2_filter_eg
@@ -189,7 +186,7 @@ class Microkorg::Program < BinData::Record
   # offset 260
   int16 :t2_filter_intensity
   string :offset_260, length: 6
-
+=end
   envelope :t2_amp_eg
 
   # offset 270
@@ -275,17 +272,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_400_8
 
   string :offset_410, length: 16
-  string :offset_420, length: 16
-=begin
-  int16 :offset_420_1
-  int16 :offset_420_2
-  int16 :offset_420_3
-  int16 :offset_420_4
-  int16 :offset_420_5
-  int16 :offset_420_6
-  int16 :offset_420_7
-  int16 :offset_420_8
-=end
+
+  string :offset_420, length: 12
+  int16 :offset_420_7 # pitch 1 ?
+  int16 :offset_420_8 # pitch 2 ?
 
   string :offset_430, length: 16
 =begin
@@ -321,31 +311,10 @@ class Microkorg::Program < BinData::Record
   int16 :offset_450_6
 =end
 
-  int16 :mod_on
-  int16 :mod_type
-
-  # offset 460
-  # string :offset_460, length: 16
-  int16 :offset_460_1
-  int16 :offset_460_2
-  int16 :offset_460_3
-  int16 :offset_460_4
-  int16 :offset_460_5
-  int16 :offset_460_6 # mod_sub_type
-  int16 :mod_speed
-  int16 :mod_detpth
-
-  # offset 470
-  int16 :offset_470_1
-  int16 :mod_low_cut
-  int16 :mod_manual
-  int16 :mod_width
-  int16 :offset_470_5
-  int16 :mod_dry_wet
+  mod :mod
+  # offset 47c
   int16 :offset_470_7
   int16 :offset_470_8
-  # string :offset_470_2, length: 6
-  # string :offset_470_3, length: 8
 
   string :offset_480, length: 16
 
