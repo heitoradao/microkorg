@@ -4,7 +4,11 @@ class Reverb < BinData::Record
   int16 :on
   int16 :reverb_type
   string :offset_4e0, length: 12
-  int16 :unknow_offset_4ef
+
+  # rust_age
+  # pitch shift
+  int16 :type_param
+
   int16 :time
   int16 :depth
   int16 :damp

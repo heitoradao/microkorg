@@ -9,14 +9,14 @@ class Mod < BinData::Record
   int16 :offset_460_4
   int16 :offset_460_5
   int16 :offset_460_6 # mod_sub_type
-  int16 :mod_speed  
-  int16 :mod_depth
+  int16 :speed # wow 
+  int16 :depth # fso
 
   # offset 470
-  int16 :offset_470_1
-  int16 :mod_low_cut
-  int16 :mod_manual
-  int16 :mod_width
-  int16 :offset_470_5
-  int16 :mod_dry_wet
+  int16 :saturation
+  int16 :low_cut
+  int16 :manual
+  int16 :width
+  int16 :feedback
+  int16 :dry_wet
 end

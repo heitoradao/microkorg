@@ -301,15 +301,15 @@ class Microkorg::Program < BinData::Record
   int16 :offset_440_8
 =end
 
-  string :offset_450, length: 12
-=begin
+  #string :offset_450, length: 12
+#=begin
   int16 :offset_450_1
   int16 :offset_450_2
   int16 :offset_450_3
   int16 :offset_450_4
   int16 :offset_450_5
   int16 :offset_450_6
-=end
+#=end
 
   mod :mod
   # offset 47c
