@@ -1,21 +1,30 @@
 require "bindata"
+
+
+require_relative "knob"
+
+require_relative "portamento"
+
 require_relative "oscilator"
 require_relative "oscilator_expanded"
-require_relative "patch"
+require_relative "noise"
+
+require_relative "filter"
 require_relative "envelope"
 require_relative "lfo"
-require_relative "hardtune"
-require_relative "vocoder"
-require_relative "noise"
+
+require_relative "patch"
+
 require_relative "arpegiator"
+
+require_relative "vocoder"
+require_relative "hardtune"
 require_relative "harmonizer"
-require_relative "knob"
+
+require_relative "mod"
+require_relative "delay"
 require_relative "reverb"
 require_relative "equalizer"
-require_relative "filter"
-require_relative "delay"
-require_relative "mod"
-require_relative "portamento"
 
 class Microkorg::Program < BinData::Record
   endian :little
