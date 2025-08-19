@@ -18,4 +18,15 @@ class Delay < BinData::Record
   int16 :offset
   int16 :feedback, initial_value: 64
   int16 :dry_wet, initial_value: 50
+
+  def delay_name(id)
+    %w[
+      Stereo
+      PingPong
+      TapeEcho
+      PitchShift
+      Reverse
+      LoRes
+    ][id]
+  end
 end

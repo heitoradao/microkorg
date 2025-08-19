@@ -19,4 +19,18 @@ class Mod < BinData::Record
   int16 :width
   int16 :feedback
   int16 :dry_wet
+
+  def mod_name(id)
+    %w[
+      Chorus
+      Flanger
+      Ensemble
+      Phaser
+      Tremolo
+      LoFi
+      Comp
+      Distortion
+      AmpSimulator
+    ][id]
+  end
 end
