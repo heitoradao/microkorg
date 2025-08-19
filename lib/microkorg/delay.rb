@@ -14,7 +14,7 @@ class Delay < BinData::Record
   # offset 4b0
   int16 :depth
   int16 :low_cut
-  int16 :offset_4b0_3
+  int16 :bpm_sync_on
   int16 :offset
   int16 :feedback, initial_value: 64
   int16 :dry_wet, initial_value: 50

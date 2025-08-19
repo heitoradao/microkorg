@@ -8,7 +8,7 @@ class Mod < BinData::Record
   int16 :offset_460_3
   int16 :offset_460_4
   int16 :offset_460_5
-  int16 :offset_460_6 # mod_sub_type
+  int16 :model # mod_sub_type
   int16 :speed # wow 
   int16 :depth # fso
 
