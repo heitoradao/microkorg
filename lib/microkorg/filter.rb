@@ -1,3 +1,5 @@
+require_relative "envelope"
+
 class Filter < BinData::Record
   endian :little
 

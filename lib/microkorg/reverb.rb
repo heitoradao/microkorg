@@ -16,4 +16,23 @@ class Reverb < BinData::Record
   int16 :width
   int16 :reverb_size
   int16 :dry_wet
+
+  def reverb_name(id)
+    %w[
+      Hall
+      Room
+      Spring
+      Rust
+      PitchShift
+      LoRes
+    ][id]
+  end
+
+  def to_s
+    <<~TXT
+      On: #{on}
+      type: #{reverb_name(reverb_type)}
+      time: #{time}
+    TXT
+  end
 end
